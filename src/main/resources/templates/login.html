@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--     <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}"> -->
+    
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --font: 'Noto Sans KR', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+        }
+
+        .screen_out {
+            display: none;
+        }
+
+        body {
+            width: 100%;
+            max-width: 1280px;
+            padding: 0 50px;
+            cursor: default;
+            margin: auto;
+        }
+
+        header {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        header a {
+            display: block;
+            text-indent: -9999px;
+            overflow: hidden;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            transform: translateY(35%);
+        }
+
+        header a::before {
+            content: "\f053";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            text-align: right;
+            color: #777;
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            transform: translate(-50%, -50%);
+            font-size: 25px;
+            line-height: 36px;
+            opacity: .6;
+        }
+
+        header a::after {
+            content: "Back";
+            position: absolute;
+            top: 50%;
+            right: 0%;
+            width: 50px;
+            height: 50px;
+            text-align: right;
+            color: #777;
+            font-family: var(--font);
+            font-size: 30px;
+            transform: translateY(-50%);
+            line-height: 30px;
+            opacity: .6;
+        }
+
+        header a:hover::before {
+            color: #000;
+            opacity: 1;
+        }
+
+        header a:hover::after {
+            color: #000;
+            opacity: 1;
+        }
+
+        main>.wrap {
+            border: 1px solid #eee;
+            max-width: 600px;
+            margin: auto;
+            padding: 50px 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #form {
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        fieldset {
+            border: none;
+            margin: auto;
+        }
+
+        fieldset>input {
+            display: block;
+            width: 100%;
+            height: 100%;
+            height: 50px;
+            border: none;
+            border-bottom: 2px solid #cecece;
+            outline: none;
+            padding: 3px 10px;
+            margin: 3px 0;
+            box-sizing: border-box;
+        }
+
+        fieldset>input+label {
+            font-family: var(--font);
+            font-size: 16px;
+            color: #333;
+            text-transform: uppercase;
+            position: absolute;
+            margin-top: -35px;
+            transition: all .3s;
+        }
+
+        fieldset>input:focus {
+            border-bottom: 2px solid #333;
+        }
+
+        fieldset>input:focus+label, input.on+label{
+            margin-top: -55px;
+            font-size: 12px;
+            color: #cecece;
+        }
+
+        fieldset .show_password {
+            position: absolute;
+            right: 70px;
+            transform: translateY(-125%);
+            cursor: pointer;
+        }
+
+        fieldset .show_password #show {
+            opacity: 0;
+        }
+
+        fieldset .show_password label {
+            text-indent: -9999px;
+            overflow: hidden;
+            width: 30px;
+            height: 30px;
+            display: block;
+        }
+
+        fieldset .show_password label::before {
+            content: "\f070";
+            position: absolute;
+            top: 50%;
+            left: 85%;
+            text-align: right;
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 20px;
+            opacity: 1;
+        }
+
+
+        fieldset .show_password label::after {
+            content: "\f06e";
+            position: absolute;
+            top: 50%;
+            left: 85%;
+            text-align: right;
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 20px;
+            opacity: 0;
+        }
+
+        #show:checked+label::before {
+            opacity: 0;
+        }
+
+        #show:checked+label::after {
+            opacity: 1;
+        }
+
+        .keep {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .keep input {
+            margin: 0 2px 0 0;
+            width: 15px;
+            height: 15px;
+        }
+
+        .keep label {
+            font-size: 12px;
+            color: #cecece;
+            font-family: var(--font);
+            margin: 0 15px 0 0;
+            cursor: pointer;
+        }
+
+        .keep input:checked+label {
+            color: #333;
+        }
+
+        #login {
+            width: 100%;
+            height: 45px;
+            background-color: transparent;
+            font-size: 16px;
+            border: 1px solid #000;
+            outline: none;
+            border-radius: 10px;
+            font-family: var(--font);
+            margin: 10px 0;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        #login:hover {
+            box-shadow: inset -1px -1px 2px #cecece;
+            background: #fff;
+            filter: brightness(.95);
+        }
+
+        .wrap>ul:nth-of-type(1) {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            right: 70px;
+            transform: translateY(-478%);
+        }
+
+        .wrap>ul:nth-of-type(1) a {
+            color: #cecece;
+            text-decoration: none;
+            font-size: 12px;
+            font-family: var(--font);
+        }
+
+        .wrap>ul:nth-of-type(1) li:nth-child(1){
+            position: relative;
+        }
+
+        .wrap>ul:nth-of-type(1) li:nth-child(1)::after{
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 50%;
+            background-color: #cecece;
+            top: 50%;
+            right: -5%;
+            transform: translateY(-37%);
+        }
+
+        .wrap>ul:nth-of-type(1) a:hover {
+            text-decoration: underline;
+            color: #333;
+        }
+
+        .wrap>h2 {
+            font-family: var(--font);
+            font-weight: 300;
+            font-size: 12px;
+            text-align: center;
+            color: #cecece;
+            position: relative;
+            width: fit-content;
+            margin: auto;
+        }
+
+        .wrap>h2::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background-color: #cecece;
+            top: 50%;
+            left: -110%;
+        }
+
+        .wrap>h2::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background-color: #cecece;
+            top: 50%;
+            right: -110%;
+        }
+
+        .wrap>ul:last-child {
+            display: flex;
+            justify-content: space-around;
+            padding: 30px 0;
+            gap: 5px;
+        }
+
+        .wrap>ul:last-child li a {
+            display: block;
+            text-indent: -9999px;
+            overflow: hidden;
+            width: 50px;
+            height: 50px;
+            position: relative;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .wrap>ul:last-child li a:hover {
+            box-shadow: inset -1px -1px 2px #f0f0f0;
+            filter: brightness(.95);
+        }
+
+        .wrap>ul:last-child li:nth-child(1) a::after {
+            content: "\4e";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            text-align: right;
+            top: 0%;
+            left: 0;
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 30px;
+            color: #333;
+            transform: translate(-30%, 15%);
+        }
+
+        .wrap>ul:last-child li:nth-child(2) a::after {
+            content: "\f075";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            text-align: right;
+            top: 0%;
+            left: 0;
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 30px;
+            color: #333;
+            transform: translate(-21%, 15%);
+        }
+
+        .wrap>ul:last-child li:nth-child(3) a::after {
+            content: "\f1a0";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            text-align: right;
+            top: 0%;
+            left: 0;
+            font-family: "Font Awesome 6 Brands";
+            font-weight: 900;
+            font-size: 30px;
+            color: #333;
+            transform: translate(-22%, 15%);
+        }
+
+        .wrap>ul:last-child li:nth-child(4) a::after {
+            content: "\f09a";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            text-align: right;
+            top: 0%;
+            left: 0;
+            font-family: "Font Awesome 6 Brands";
+            font-weight: 900;
+            font-size: 30px;
+            color: #333;
+            transform: translate(-20%, 15%);
+        }
+
+        @media (max-width:600px){
+            main .wrap{
+                border: none;
+                width: 100%;
+                padding: 0;
+            }
+            fieldset .show_password{
+                right: 0;
+            }
+            .keep{
+                margin: 2px 0 15px 0;
+            }
+
+            .keep label{
+                margin: 0 5px 0 0;
+            }
+
+            #login{
+                margin: 11px 0;
+            }
+
+            .wrap>ul:nth-of-type(1){
+                gap: 15px;
+                left: 0px;
+                transform: translateY(-81px);
+            }
+        }
+    </style>
+</head>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/script/board.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function(){
+			
+		
+		
+		
+		});
+	</script>
+    
+    <script>
+    
+	 $("fieldset>input").blur(function(){
+	    if($(this).val().length>0){
+	        $(this).addClass("on");
+	    }
+	    else{
+	        $(this).removeClass("on");
+	    }
+	 });
+	
+	 $("#show+label").click(function(){
+	    var show = $("fieldset #psw").attr("type");
+	    if(show === "password"){
+	        $("fieldset #psw").attr("type","text");
+	    }
+	    else{
+	        $("fieldset #psw").attr("type","password");
+	    }
+	 })
+
+
+    </script>
+
+<body>
+    <header>
+        <h1>로그인 페이지</h1>
+        <a href="#">메인 페이지 돌아가기</a>
+    </header>
+    <main>
+        <div class="wrap">
+            <form method="post" action="/postLoginData">
+                <fieldset>
+                    <legend class="screen_out">로그인 정보</legend>
+                    <input type="text" id="user_id" autocomplete="off" name="member_id"><label for="user_id">your name</label>
+                    <input type="password" id="psw" autocomplete="off" name="passwd"><label for="psw">your password</label>
+                    <div class="show_password">
+                        <input type="checkbox" id="show"><label for="show">비밀번호 보기</label>
+                    </div>
+                    <div class="keep">
+                        <input type="checkbox" id="remember"><label for="remember">아이디 저장</label>
+                        <input type="checkbox" id="auto"><label for="auto">로그인 유지</label>
+                    </div>
+                    <button type="submit" id="login">로그인</button>
+                </fieldset>
+            </form>
+            <h2 class="screen_out">기타 로그인 정보</h2>
+            <ul>
+                <li><a href="#">아이디/비밀번호 찾기</a></li>
+                <li><a href="#">회원가입</a></li>
+            </ul>
+            <h2>SNS 계정으로 간편 로그인</h2>
+            <ul>
+                <li><a href="#">네이버 로그인</a></li>
+                <li><a href="#">카카오톡 로그인</a></li>
+                <li><a href="#">구글 로그인</a></li>
+                <li><a href="#">페이스북 로그인</a></li>
+            </ul>
+        </div>
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판</title>
+    <script type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+	<link rel="stylesheet" href="/css/Board_list.css" >
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/script/board.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			boardListSetUp();
+			
+		
+		
+		
+		});
+	</script>
+
+</head>
+
+<body>
+    <h1>게시판</h1>
+    <div class="head">
+        <h2 class="screen_out">검색</h2>
+        <p class="totalBoard">총 <strong class="here"></strong>개의 게시물이 있습니다.</p>
+        <div class="search">
+            <select>
+                <option>ID</option>
+                <option>writer</option>
+                <option>title</option>
+                <option>create</option>
+                <option>modified</option>
+            </select><input type="text">
+        </div>
+    </div>
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th scope=col>number</th>
+                    <th scope=col>title</th>
+                    <th scope=col>writer</th>
+                    <th scope=col>create</th>
+                    <th scope=col>modified</th>
+                </tr>
+            </thead>
+            <tbody>
+				<!-- board.js로 동적 HTML  생성-->
+            </tbody>
+        </table>
+        <a class="create" href="/board/register">글쓰기</a>
+    </div>
+    <div class="page">
+        <h2 class="screen_out">현재페이지</h2>
+        <p><strong>1</strong></p>
+        <div class="buttons">
+            <button>이전 페이지</button>
+            <button>다음 페이지 </button>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

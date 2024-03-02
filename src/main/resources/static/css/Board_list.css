@@ -1,0 +1,214 @@
+@charset "EUC-KR";
+:root {
+            --font: 'Noto Sans KR', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .screen_out{
+        	display:none;
+        }
+
+        body {
+            padding: 0 50px;
+            cursor: default;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .head {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .head p {
+            font-family: var(--font);
+            font-size: 16px;
+            line-height: 16px;
+        }
+
+        .search {
+            display: flex;
+            width: fit-content;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search select {
+            text-transform: uppercase;
+            font-family: var(--font);
+            height: fit-content;
+            border: none;
+            outline: none;
+            padding: 2px 0;
+
+        }
+
+        .search select option {
+            text-transform: uppercase;
+            font-family: var(--font);
+        }
+
+        .search input {
+            border: none;
+            outline: none;
+            border-bottom: 1px solid #eee;
+            padding: 10px;
+        }
+
+        .search input:focus {
+            border-bottom: 1px solid #999;
+        }
+
+        .table {
+            position: relative;
+        }
+
+        table {
+            margin: auto;
+            width: 100%;
+            border-collapse: collapse;
+            border-bottom: 1px solid #999;
+        }
+
+        thead {
+            border-top: 1px solid #999;
+            border-bottom: 1px solid #999;
+            background-color: #eee;
+        }
+
+        thead th {
+            font-family: var(--font);
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-align: center;
+            line-height: 25px;
+            letter-spacing: -1px;
+            width: fit-content;
+        }
+
+        tbody td {
+            border: 1px dashed #b9b9b9;
+            text-align: center;
+            border-collapse: collapse;
+            font-size: 14px;
+            line-height: 20px;
+            padding: 5px 0;
+            width: fit-content;
+
+        }
+
+        tbody td:nth-child(2) a {
+            cursor: pointer;
+            padding: 0 20px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        tbody td:nth-child(2):hover {
+            text-decoration: underline;
+        }
+
+        .create {
+            margin-top: 10px;
+            position: absolute;
+            right: 0;
+            color: #000;
+            text-decoration: none;
+            border: 1px solid #000;
+            border-radius: 2px;
+            padding: 5px 10px;
+        }
+
+        .create:hover {
+            box-shadow: inset -1px -1px 1px #cecece;
+        }
+
+        .page {
+            display: flex;
+            gap: 50px;
+            margin: auto;
+            width: fit-content;
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 500px;
+            align-items: center;
+        }
+
+        .page p {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+
+        }
+
+        .page strong {
+            text-align: center;
+            border-bottom: 1px solid #000;
+        }
+
+        .page .buttons {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+
+        }
+
+        .buttons button {
+            background-color: transparent;
+            border: none;
+            text-indent: -9999px;
+            overflow: hidden;
+            width: 50px;
+            height: 50px;
+            position: relative;
+            outline: none;
+            cursor: pointer;
+            opacity: 0.5;
+        }
+
+        .buttons button:hover{opacity: 1;}
+
+        .buttons button:first-of-type::after {
+            content: "\f053";
+            font-family: "Font Awesome 6 Free";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            font-weight: 900;
+            font-size: 16px;
+            text-align:right;
+            color: #333;
+            z-index: -1;
+        }
+
+        .buttons button:last-of-type::after {
+            content: "\f054";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 16px;
+            text-align: right;
+            color: #333;
+            opacity: 0.7;
+            z-index: -1;
+        }

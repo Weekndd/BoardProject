@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"></html>
+<head>
+  <!-- Toast UI Editor -->
+	<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+	
+</head>
+<body>
+	<h1>글쓰기</h1>
+	<div>
+		<form action="post">
+			<input placeholder="제목을 입력하세요" name="title">
+			<div id="editor" name="content"></div>
+			<button>글 등록하기</button>
+		</form>
+			<button onclick="seeHtml()">html보기</button>
+			<button onclick="seeMd()">markdown보기</button>
+	</div>
+
+ 
+	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+	<script>
+		const Editor = toastui.Editor;
+	
+		const editor = new Editor({
+			  el: document.querySelector('#editor'),
+			  height: '600px',
+			  initialEditType: 'markdown',
+			  previewStyle: 'vertical'
+			});
+		
+		seeHtml = function(){
+			alert(editor.getHTML());
+		}
+		seeMd = function(){
+			alert(editor.getMarkdown());
+		}
+	</script>
+</body>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>상세보기</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- <link rel="stylesheet" href="/css/Board_details.css" > -->
+    <style>
+        :root {
+            --font: 'Noto Sans KR', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+        }
+
+        .screen_out {
+
+            display: none;
+        }
+
+        body {
+            padding: 0 50px;
+            cursor: default;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        section {
+            width: 100%;
+            max-width: 1280px;
+            margin: auto;
+            position: relative;
+        }
+
+        h4 {
+            text-transform: uppercase;
+            font-family: var(--font);
+            width: 100%;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .head>h4 {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .head>ul {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .head li>ul {
+            display: flex;
+        }
+
+        .head li:last-of-type>ul li {
+            margin: 0;
+        }
+
+        .head>ul li {
+            display: flex;
+        }
+
+        .head ul li {
+            position: relative;
+            display: flex;
+            margin: 0 15px 0 0;
+        }
+
+        .head>ul>li:nth-of-type(1)>ul>li:nth-child(1)::after {
+            content: "";
+            position: absolute;
+            height: 40%;
+            border: #e5e5e5 1px solid;
+            top: 60%;
+            transform: translateY(-40%);
+            right: -30%;
+        }
+
+        .head ul li h4 {
+            position: relative;
+            margin: 0px 15px;
+            font-weight: 300;
+            color: #333;
+        }
+
+        .head ul li h4+p {
+            font-weight: 300;
+            color: #333;
+        }
+
+
+        .head>ul>li:nth-of-type(1) h4:first-child {
+            margin: 0px 15px 0 0;
+        }
+
+        .head>ul>li:nth-of-type(2) {
+            margin: 0px 0 0 10px;
+        }
+
+        .head ul li h4::after {
+            content: "";
+            position: absolute;
+            height: 40%;
+            border: 1px solid #e5e5e5;
+            top: 50%;
+            right: -13%;
+            transform: translateY(-50%);
+        }
+
+        .contents {
+            padding: 50px 0;
+            position: relative;
+            min-height: 300px;
+            box-sizing: border-box;
+        }
+
+        .contents .modi {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            background-color: #f5f5f5;
+            padding: 3px 10px;
+            outline: none;
+            border: none;
+            transform: translateY(95%);
+            font-family: var(--font);
+            cursor: pointer;
+        }
+
+        .contents .likes{
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            background-color: transparent;
+            width: 50px;
+            height: 90px;
+            border: none;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .contents .likes:hover::after{
+            content: "\f598";
+        }
+
+        .contents .likes::after{
+            content: "\f004";
+            font-family: "Font Awesome 6 Free";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-74%,15%);
+            width: 50px;
+            height: 50px;
+            text-align: right;
+            font-size: 25px;
+            color: red;
+        }
+
+
+        .contents .modi:hover {
+            box-shadow: inset -1px -1px 1px #cecece;
+        }
+
+        .comments>p {
+            font-family: var(--font);
+            font-size: 14px;
+            margin: 5px 0;
+            word-break: keep-all;
+        }
+
+        .comments>p>span {
+            font-weight: 700;
+        }
+
+        .comments ul.list {
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            position: relative;
+            min-height: 50px;
+        }
+
+        .comments ul.list:empty::before {
+            content: "등록된 댓글이 없습니다";
+            position: absolute;
+            color: #cecece;
+            width: fit-content;
+            height: fit-content;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font);
+            word-break: keep-all;
+        }
+
+        .comments ul.list li {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+            position: inherit;
+        }
+
+        .comments ul.list li button {
+            position: absolute;
+            right: 10px;
+            text-indent: -9999px;
+            overflow: hidden;
+            width: 20px;
+            height: 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .comments ul.list li button:hover{
+            box-shadow: inset -1px -1px 1px #c3c3c3;
+        }
+
+        .comments ul.list li button::after {
+            content: "\58";
+            font-family: "Font Awesome 6 Free";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 0%;
+            top: 0px;
+            transform: translate(-25%,16%);
+            text-align: right;
+        }
+
+        .comments ul.list li:last-child {
+            border-bottom: none;
+        }
+
+        .comments ul.list li>p {
+            font-family: var(--font);
+        }
+
+        .comments ul.list li>p:nth-of-type(1) {
+            width: 10%;
+            min-width: 75px;
+            text-align: left;
+            display: block;
+            padding: 0 5px;
+            font-weight: 600;
+            word-break: keep-all;
+        }
+
+        .comments .writeComment{
+            display: flex;
+            position: relative;
+        }
+
+        .writeComment button{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            padding: 3px 10px;
+            font-family: var(--font);
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .comments .inputRipple {
+            padding: 10px 0;
+            background-color: #fbfbfb;
+            border-bottom: 1px solid #333;
+            width: 100%;
+        }
+
+        .comments .inputRipple li:first-child{
+            width: 15%;
+            margin: 0 0 3px 0;
+        }
+
+        .comments .inputRipple li:last-child{
+            width: 100%;
+            min-height: 100px;
+            margin: 0 0 30px 0;
+        }
+
+        .comments input{
+            width: 100%;
+            border: none;
+            padding: 5px 3px;
+            outline: none;
+            font-family: var(--font);
+        }
+
+        .comments input::placeholder{
+            font-family: var(--font);
+            color: #b6b6b6
+        }
+
+        .comments input:focus{
+            font-family: var(--font);
+            border-bottom: #333 2px solid;
+        }
+
+        .comments textarea{
+            width: 100%;
+            min-height: 100px;
+            border: 1px solid #eee;
+            outline: none;
+            background: transparent;
+            padding: 5px;
+            font-family: var(--font);
+        }
+
+    
+        .comments textarea::placeholder{
+            font-family: var(--font);
+            color: #b6b6b6
+        }
+
+        .comments textarea:focus{
+            font-family: var(--font);
+            border: #333 1px solid;
+        }
+
+        .return {
+            margin-top: 10px;
+            position: absolute;
+            right: 0;
+            color: #000;
+            text-decoration: none;
+            border: 1px solid #000;
+            border-radius: 2px;
+            padding: 5px 10px;
+        }
+
+        .return:hover {
+            box-shadow: inset -1px -1px 1px #cecece;
+        }
+    </style>
+	
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/script/board.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			getBoardDetails(window.location.href.split('/').pop());
+			
+		
+		
+		
+		});
+	</script>
+
+</head>
+
+<body>
+    <header>
+        <h1>게시글 상세보기</h1>
+    </header>
+    <h2 class="screen_out">게시글 내용</h2>
+    <section>
+        <h3 class="screen_out">title</h3>
+        <article class="head">
+            <h4 id="title"><!-- 제목 --></h4>
+            <ul>
+                <li>
+                    <ul>
+                        <li>
+                            <h4 class="screen_out">user</h4>
+                            <p id="writer"><!-- 작성자 --></p>
+                        </li>
+                        <li>
+                            <h4 class="screen_out">date</h4>
+                            <p id="create_at"><!-- 작성날짜 --></p>
+                        </li>
+                    </ul>
+
+                </li>
+                <li>
+                    <ul>
+                        <li>
+                            <h4>view</h4>
+                            <p>1234</p>
+                        </li>
+                        <li>
+                            <h4>likes</h4>
+                            <p>1234</p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </article>
+        <article class="contents">
+            <h3 class="screen_out">contents</h3>
+            <p id="content"><!-- 컨텐츠 내용 --></p>
+            <button class="likes">좋아요</button>
+            <button class="modi">수정하기</button>
+        </article>
+        <article class="comments">
+            <h3 class="screen_out">comment</h3>
+            <p>전체 댓글 <span>1</span>개</p>
+            <ul class="list"><li><p>dd</p><p>ㅋㅋㅋㅋ</p><button>삭제</button></li></ul>
+            <div class="writeComment">
+            <ul class="inputRipple">
+                <li><input type="text" name="user_name" id="nickname" placeholder="닉네임"></li>
+                <li><textarea type="text" name="commentContent" id="rip" placeholder="댓글을 입력해주세요"></textarea></li>
+            </ul>
+            <button>등록</button>
+            </div>
+        </article>
+    <a href="/board" class="return">돌아가기</a>
+    </section>
+    
+   
+
+</body>
+
+</html>
