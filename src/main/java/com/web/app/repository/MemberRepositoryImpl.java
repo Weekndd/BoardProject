@@ -15,7 +15,7 @@ public class MemberRepositoryImpl implements MemberRepository{
 	private final SqlSessionTemplate session;
 
 	@Override
-	public void postMemberJoin(MemberDTO memberDTO) {
+	public void postMemberSignUp(MemberDTO memberDTO) {
 		session.insert("joinMember",memberDTO);
 	}
 
@@ -24,6 +24,11 @@ public class MemberRepositoryImpl implements MemberRepository{
 		MemberDTO memberDTO = session.selectOne("findMemberByMember_id",member_id);
 		return memberDTO;
 	}
-
+	@Override
+	public MemberDTO findMemberByEmail(String email) {
+		MemberDTO memberDTO = session.selectOne("findMemberByEmail",email);
+		
+		return memberDTO;
+	}
 
 }

@@ -21,8 +21,8 @@ public class MemberServiceImpl implements MemberService{
 	private final JwtTokenProvider jwtTokenProvider;
 	
 	@Override
-	public void postMemberJoin(MemberDTO memberDTO) {
-		memberRepository.postMemberJoin(memberDTO);
+	public void postMemberSignUp(MemberDTO memberDTO) {
+		memberRepository.postMemberSignUp(memberDTO);
 	}
 	
 	@Override
@@ -40,5 +40,15 @@ public class MemberServiceImpl implements MemberService{
 		//3. 인증 정보를 기반으로 JWT토큰 생성
 		JwtToken jwtToken = jwtTokenProvider.generateToken(authentication);
 		return jwtToken;
+	}
+
+	@Override
+	public MemberDTO postMemberSignUpValidation(String member_id, String email) {
+		MemberDTO responseMemberDTO = new MemberDTO();
+		MemberDTO memberDTO = memberRepository.findMemberByMember_id(member_id);
+		responseMemberDTO.setMember_id(memberDTO.getMember_id());
+		memberDTO = memberRepository.findMemberByEmail(email);
+		responseMemberDTO.setEmail(memberDTO.getEmail());
+		return responseMemberDTO;
 	}
 }

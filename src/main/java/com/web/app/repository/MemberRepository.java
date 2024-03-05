@@ -4,8 +4,10 @@ import com.web.app.dto.MemberDTO;
 
 public interface MemberRepository {
 
-	void postMemberJoin(MemberDTO memberDTO);
+	void postMemberSignUp(MemberDTO memberDTO);
 
 	MemberDTO findMemberByMember_id(String member_id);
+
+	MemberDTO findMemberByEmail(String email);
 
 }

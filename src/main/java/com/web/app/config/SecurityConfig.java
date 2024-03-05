@@ -32,9 +32,12 @@ public class SecurityConfig {
 		
 		httpSecurity.authorizeHttpRequests(requests ->requests
 				.requestMatchers("/script/**","css/**","/jquery/**","/favicon.*","/*/icon-*").permitAll()
-				.requestMatchers(HttpMethod.GET, "/member/join").permitAll() //회원가입 페이지 요청은 모두에게 허용
 				.requestMatchers(HttpMethod.GET, "/login").permitAll() //로그인 페이지 요청은 모두에게 허용
 				.requestMatchers(HttpMethod.POST,"/postLoginData").permitAll() //로그인 요청은 모두에게 허용
+				
+				.requestMatchers(HttpMethod.GET, "/member/signUp").permitAll() //회원가입 페이지 요청은 모두에게 허용
+				.requestMatchers(HttpMethod.POST, "/member/signUp").permitAll() //회원가입 페이지 요청은 모두에게 허용
+				.requestMatchers(HttpMethod.GET,"/member/signUp/validation/*").permitAll() //회원가입 아이디 중복체크
 				.requestMatchers("/member/test").hasRole("USER")//테스트를 위함
 				.requestMatchers("/error").permitAll()//에러 났을 경우, 
 				.anyRequest().authenticated()) //나머지 요청들은 인증 필요하도록 설정
