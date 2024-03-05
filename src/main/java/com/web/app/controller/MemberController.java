@@ -20,15 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	private final MemberService memberService;
 	
-	@GetMapping("/member/join")
-	public String mappingMemberJoin() {
-		return "Member_join";
+	@GetMapping("/member/signUp")
+	public String mappingMemberSignUp() {
+		return "Member_signUp";
 	}
 	@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
-	
 	@PostMapping("/postLoginData")
 	public String postLoginData(SecurityUser user, HttpServletResponse response) {
 		String member_id = user.getUsername();

@@ -5,8 +5,10 @@ import com.web.app.util.JwtToken;
 
 public interface MemberService {
 
-	void postMemberJoin(MemberDTO memberDTO);
+	void postMemberSignUp(MemberDTO memberDTO);
 
 	JwtToken postLoginData(String username, String password);
+
+	MemberDTO postMemberSignUpValidation(String member_id, String email);
 
 }
