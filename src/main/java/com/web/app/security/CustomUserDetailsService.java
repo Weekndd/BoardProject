@@ -25,6 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
 			MemberDTO memberDTO = memberRepository.findMemberByMember_id(username);
+
 			SecurityUser securityUser = SecurityUser.builder()
 					.member_id(memberDTO.getMember_id())
 					.passwd(memberDTO.getPasswd())
@@ -42,7 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	private UserDetails createUserDetails(SecurityUser securityUser) {
 		return User.builder()
 				.username(securityUser.getUsername())
-				.password(passwordEncoder.encode(securityUser.getPassword()))
+				.password(securityUser.getPassword())
 				.roles(securityUser.getAuthList().toArray(new String[0]))
 				.build();
 	}

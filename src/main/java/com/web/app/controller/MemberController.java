@@ -38,8 +38,6 @@ public class MemberController {
 		log.info("request username = {}, password = {}", member_id, passwd);
         log.info("jwtToken accessToken = {}, refreshToken = {}", jwtToken.getAccessToken(),
         		jwtToken.getRefreshToken());
-        System.out.println("ACCESS_TOKEN: "+jwtToken.getAccessToken()+"============================================");
-        System.out.println("REFRESH_TOKEN: "+jwtToken.getRefreshToken()+"============================================");
         
         Cookie accessTokenCookie = new Cookie("accessToken", jwtToken.getAccessToken());
         accessTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7일 동안 유효

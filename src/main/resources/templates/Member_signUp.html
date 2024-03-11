@@ -15,20 +15,17 @@ function validation() {
     var member_id = $("#member_id").val();
     var passwd = $("#passwd").val();
     var email = $("#email").val();
-   
-    if(idCheck.test(member_id) || member_id == "" ){
-    	alert("아이디가 공백을 포함하고 있습니다.");
-    	return false;
-    }
+    
     if (!passwdCheck.test(passwd)) {
         alert("비밀번호는 최소 하나 이상의 소문자, 하나의 대문자, 하나의 숫자, 하나의 특수문자, 최소 8 자리 입니다.");
         return false;
     }
     
-    if(!emailCheck.test(email)){
-    	alert("이메일 형식 다르거나 공백을 포함하고 있습니다.");
+    if($("#member_id").data("data-checked") == "false" || $("#email").attr("data-checked") == "false"){
+    	alert("아이디 및 이메일 중복확인을 해주세요");
     	return false;
-    }    
+    }
+    
     
 }
 function checkIdDuplication(){
@@ -36,32 +33,37 @@ function checkIdDuplication(){
 	
 	if(idCheck.test(member_id) || member_id == "" ){
     	alert("아이디가 공백을 포함하고 있습니다.");
+    	$("#member_id").val("");
     	return false;
     }
+	else{
+		$.ajax({
+			type: "get",
+			url: "/member/signUp/validation/member_id="+member_id,
+			success: function(data) {
+				if(data.member_id == null){
+					alert("사용 가능한 아이디 입니다.");		
+					$("#member_id").attr("data-checked","true");
+					$("#member_id").prop("readOnly",true);
+				}
+				else{
+					alert("중복된 아이디 입니다.");
+					$("#member_id").val("");
+				}
+			},
+			error: function(e){ //요청에 대한 응답이 error인 경우에 동작할 코드
+				console.log("에러발생");
+			}//error
+		})//end ajax
+	}
 	
-	$.ajax({
-		type: "get",
-		url: "/member/signUp/validation/member_id="+member_id,
-		success: function(data) {
-			if(data.member_id == null){
-				alert("사용 가능한 아이디 입니다.");		
-				$("#member_id").prop("readOnly",true);
-			}
-			else{
-				alert("중복된 아이디 입니다.");
-				$("#member_id").val("");
-			}
-		},
-		error: function(e){ //요청에 대한 응답이 error인 경우에 동작할 코드
-			console.log("에러발생");
-		}//error
-	})//end ajax
 }
 
 function checkEmailDuplication(){
 	var email = $("#email").val();
     if(!emailCheck.test(email)){
     	alert("이메일 형식 다르거나 공백을 포함하고 있습니다.");
+    	$("#email").val("");
     	return false;
     }    
 	$.ajax({
@@ -69,7 +71,8 @@ function checkEmailDuplication(){
 		url: "/member/signUp/validation/email="+email,
 		success: function(data) {
 			if(data.email == null){
-				alert("사용 가능한 이메일 입니다.");		
+				alert("사용 가능한 이메일 입니다.");
+				$("#email").attr("data-checked","true");
 				$("#email").prop("readOnly",true);
 			}
 			else{
@@ -83,6 +86,8 @@ function checkEmailDuplication(){
 		}//error
 	})//end ajax
 }
+
+
 	
 </script>
 <title>Insert title here</title>
@@ -90,9 +95,9 @@ function checkEmailDuplication(){
 	<h1>회원가입 페이지</h1>
 	<div>
 		<form method="POST" action="#" onsubmit="return validation()">
-			<span><strong>ID</strong><br><input value="hsch" id="member_id" name="member_id" placeholder="아이디를 입력하세요"></span><button type="button" onclick="checkIdDuplication()">중복확인</button><br>
-			<span><strong>PASSWD</strong><br><input value="Tmdcks3400@" id="passwd" name="passwd" placeholder="패스워드를 입력하세요"></span><br>
-			<span><strong>E-mail</strong><br><input value="hsch19@naver.com" id="email" name="email" placeholder="이메일을 입력하세요"></span><button type="button" onclick="checkEmailDuplication()">중복확인</button><br><br>
+			<span><strong>ID</strong><br><input value="hsch" id="member_id" name="member_id" placeholder="아이디를 입력하세요" data-checked="false"></span><button type="button" onclick="checkIdDuplication()">중복확인</button><br>
+			<span><strong>PASSWD</strong><br><input value="Tmdcks3400@" id="passwd" name="passwd" placeholder="패스워드를 입력하세요" type="password"></span><br>
+			<span><strong>E-mail</strong><br><input value="hsch19@naver.com" id="email" name="email" placeholder="이메일을 입력하세요" data-checked="false"></span><button type="button" onclick="checkEmailDuplication()">중복확인</button><br><br>
 			<span><button type="submit">가입하기</button></span>
 		</form>
 	
