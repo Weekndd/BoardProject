@@ -36,7 +36,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST,"/postLoginData").permitAll() //로그인 요청은 모두에게 허용
 				
 				.requestMatchers(HttpMethod.GET, "/member/signUp").permitAll() //회원가입 페이지 요청은 모두에게 허용
-				.requestMatchers(HttpMethod.POST, "/member/signUp").permitAll() //회원가입 페이지 요청은 모두에게 허용
+				.requestMatchers(HttpMethod.POST, "/member/signUp").permitAll() //회원가입 요청은 모두에게 허용
 				.requestMatchers(HttpMethod.GET,"/member/signUp/validation/*").permitAll() //회원가입 아이디 중복체크
 				.requestMatchers("/member/test").hasRole("USER")//테스트를 위함
 				.requestMatchers("/error").permitAll()//에러 났을 경우, 
