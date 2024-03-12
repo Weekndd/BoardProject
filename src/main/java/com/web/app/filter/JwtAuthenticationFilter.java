@@ -33,7 +33,6 @@ public class JwtAuthenticationFilter  extends GenericFilterBean{
 		//2.validateToken으로 토큰 유효성 검사
 		if(token!=null && jwtTokenProvider.validateToken(token)) {
 			//토큰이 유효할 경우 토큰에서 Authentication 객체를 가져와서 SecurityContext에 저장
-			
 			Authentication authentication = jwtTokenProvider.getAuthentication(token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
@@ -49,7 +48,6 @@ public class JwtAuthenticationFilter  extends GenericFilterBean{
         
         if(bearerToken == null) {
         	Cookie[] cookies = request.getCookies();
-        	System.out.println("쿠키 널 값이라 쿠키 전체 뒤져보는중====================");
         	if(cookies != null) {
         		for(Cookie cookie : cookies) {
             		if(cookie.getName().equals("accessToken")) {

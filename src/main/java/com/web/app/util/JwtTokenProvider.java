@@ -1,9 +1,11 @@
 package com.web.app.util;
 
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -11,9 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.web.app.security.SecurityUser;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -45,6 +47,7 @@ public class JwtTokenProvider {
     // Member 정보를 가지고 AccessToken, RefreshToken을 생성하는 메서드
     public JwtToken generateToken(Authentication authentication) {
         // 권한 가져오기
+    	SecurityUser securityUser = (SecurityUser)authentication.getPrincipal();
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)//스트림의 요소들을 GrantedAuthority의 getAuthority메서드와 맵핑
                 .collect(Collectors.joining(","));
@@ -54,8 +57,10 @@ public class JwtTokenProvider {
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + 86400000);//24시간을 밀리초로 나타낸 것
         String accessToken = Jwts.builder()
-                .setSubject(authentication.getName())
+//        		.setSubject(authentication.getName())
+                .setSubject(securityUser.getMember_id())
                 .claim("auth", authorities)
+                .claim("email", securityUser.getEmail())
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -65,7 +70,6 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(now + 86400000)) 
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-        
         //위에서 만든 accessToken과 refreshToken을 사용해서 JwtToken발행
         return JwtToken.builder()
                 .grantType("Bearer")
@@ -86,13 +90,17 @@ public class JwtTokenProvider {
         }
 
         // 클레임에서 권한 정보 가져오기
-        Collection<? extends GrantedAuthority> authorities = Arrays.stream(claims.get("auth").toString().split(","))
+        Collection<? extends GrantedAuthority> authorities = 
+        		Arrays.stream(claims.get("auth").toString().split(","))
                 .map(SimpleGrantedAuthority::new)//스트림 각 요소에 대해 SimpleGrantedAuthority의 생성자를 호출하여 새로운 SimpleGrantedAuthority 객체로 매핑합니다.
                 .collect(Collectors.toList());//스트림의 결과를 리스트로 수집하는 연산
 
+        List<String> roles = new ArrayList<>(Arrays.asList(claims.get("auth",String.class).split(",")));
+        
         // UserDetails 객체를 만들어서 Authentication return
         // UserDetails: interface, User: UserDetails를 구현한 class
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
+//        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        SecurityUser principal = new SecurityUser(claims.getSubject(), null, claims.get("email",String.class), null);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
