@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 function boardListSetUp() {
 	$.ajax({
 		type: "get", //서버에 get/post방식 요청
@@ -36,7 +34,7 @@ function getBoardDetails(board_id) {
 		success: function(data) {
 			$("#title").text(data.title);
 			$("#writer").text(data.writer);
-			$("#content").text(data.content);
+			content = data.content
 		},
 		error: function(e){ //요청에 대한 응답이 error인 경우에 동작할 코드
 			console.log("에러발생");
@@ -46,11 +44,6 @@ function getBoardDetails(board_id) {
 
 
 function postLoginData(callback){
-/*	var header = $("meta[name='_csrf_header']").attr('content');
-	var token = $("meta[name='_csrf']").attr('content');
-	console.log(header);
-	console.log(token);*/
-	
 	var user = {
 		"member_id": $("#user_id").val(),
 		"passwd": $("#psw").val()
@@ -75,41 +68,4 @@ function postLoginData(callback){
 	
 }
 
-function doLogin() {
-	postLoginData(function(error, result){
-		if(error){
-			console.log("콜백에러");
-		}
-		else{
-			var accessToken = result.accessToken;
-			var refreshToken = result.refreshToken;
-			
-			document.cookie = "accessToken=" + accessToken + "; path=/;";
-			document.cookie = "refreshToken="+refreshToken + "; path=/;";
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET","/board",true);
-			xhr.withCredentials =true;
-			xhr.send();
-			
-			/*$.ajax({
-				type: "get",
-				url: "/board",
-				beforeSend: function(xhr){//xhr : XmlHttpRequest
-					xhr.setRequestHeader("Authorization",accessToken);
-					
-				},
-				
-				success: function(data) {
-					window.location.href = "/board";
-				},
-				error: function(e){ //요청에 대한 응답이 error인 경우에 동작할 코드
-					console.log("에러발생");
-				}//error
-			})//end ajax*/
-		}
-	});
-	
-	
-
-}
 	

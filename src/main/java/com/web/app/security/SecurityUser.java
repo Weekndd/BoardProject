@@ -25,6 +25,8 @@ public class SecurityUser implements UserDetails{
 	
 	private String member_id;
 	private String passwd;
+	private String email;
+
 	@Builder.Default
 	private List<String> authList = new ArrayList<>(); 
 	
@@ -68,5 +70,5 @@ public class SecurityUser implements UserDetails{
 	public String getUsername() {
 		return this.member_id;
 	}
-
+	
 }

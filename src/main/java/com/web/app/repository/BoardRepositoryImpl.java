@@ -43,6 +43,6 @@ public class BoardRepositoryImpl implements BoardRepository{
 		int res = session.insert("registerBoard",boardDTO);
 		System.out.println("결과 : "+ res);
 	}
-
+	
 
 }

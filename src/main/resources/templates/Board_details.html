@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>상세보기</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -355,13 +356,19 @@
 	
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="/script/board.js"></script>
+    
 	<script type="text/javascript">
+		var content = "";
+		getBoardDetails(window.location.href.split('/').pop());
 		$(document).ready(function(){
-			getBoardDetails(window.location.href.split('/').pop());
+			const Viewer = toastui.Editor;
+			const viewer = new Viewer({
+				  el: document.querySelector('#viewer'),
+				  height: '600px',
+				  initialValue: content
+				});
 			
-		
-		
-		
+			
 		});
 	</script>
 
@@ -406,7 +413,9 @@
         </article>
         <article class="contents">
             <h3 class="screen_out">contents</h3>
-            <p id="content"><!-- 컨텐츠 내용 --></p>
+            
+            <div id="viewer"></div>
+           
             <button class="likes">좋아요</button>
             <button class="modi">수정하기</button>
         </article>
@@ -428,5 +437,6 @@
    
 
 </body>
+	
 
 </html>

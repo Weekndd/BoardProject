@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService{
 	private final MemberRepository memberRepository;
-	private final PasswordEncoder passwordEncoder;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -29,9 +28,12 @@ public class CustomUserDetailsService implements UserDetailsService{
 			SecurityUser securityUser = SecurityUser.builder()
 					.member_id(memberDTO.getMember_id())
 					.passwd(memberDTO.getPasswd())
+					.email(memberDTO.getEmail())
 					.build();
 			securityUser.getAuthList().add("USER");
-			return createUserDetails(securityUser);
+//			System.out.println("loadUserByUsername : "+ securityUser.getEmail());
+			return securityUser;
+//			return createUserDetails(securityUser);  --> @AuthenticationPrincipal을 사용해서 커스텀된 사용자정보를 가져오기 위해 바꿔줬음
 			
 		} catch (UsernameNotFoundException usernameNotFoundException) {
 			System.out.println(usernameNotFoundException);
