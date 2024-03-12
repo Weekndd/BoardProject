@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.web.app.dto.BoardDTO;
 import com.web.app.repository.BoardRepository;
+import com.web.app.security.SecurityUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,11 +28,15 @@ public class BoardServiceImpl  implements BoardService {
 	}
 
 	@Override
-	public void register(BoardDTO boardDTO) {
+	public void register(BoardDTO boardDTO, SecurityUser securityUser) {
+		setWriterInfo(boardDTO, securityUser);
 		boardRepository.register(boardDTO);
 		
 	}
-
+	private static void setWriterInfo(BoardDTO boardDTO, SecurityUser securityUser) {
+		boardDTO.setWriter(securityUser.getMember_id());
+		boardDTO.setEmail(securityUser.getEmail());
+	}
 	
 
 	

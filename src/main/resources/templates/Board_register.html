@@ -3,30 +3,77 @@
 <head>
   <!-- Toast UI Editor -->
 	<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-	
+	<style>
+        * {
+            text-align:  center;
+        }
+        #editor {
+            border : 1px solid;
+            width : 50%;
+            margin : 0 auto;
+        }
+    </style>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
+	</script>
+	<script type="text/javascript">
+		function savePosting() {
+			var board = {
+					title: $("#title").val(),
+					content: editor.getHTML(),
+			}
+			if(board.title == "") {
+				alert("제목을 입력해주세요");
+				return false;
+			}
+			if(board.content == "<p><br></p>") {
+				alert("내용을 입력해주세요");
+				return false;
+			}
+			$.ajax({
+				type: "post",
+				url: "/board/register",
+				data: JSON.stringify(board),
+				contentType: "application/json",
+				sucess: function() {
+					
+				},
+				error: function() {
+					console.log("에러발생");
+				},
+			})
+			window.location.href ="/board"
+			
+		}	
+	</script>
 </head>
 <body>
 	<h1>글쓰기</h1>
 	<div>
-		<form action="/board">
-			<input placeholder="제목을 입력하세요" name="title">
+		<form action="/board/register">
+			<input placeholder="제목을 입력하세요" name="title" id="title">
+			<br>
+			<br>
 			<div id="editor" name="content"></div>
-			<button>글 등록하기</button>
 		</form>
+			<button onclick="savePosting()">글 등록하기</button>
 			<button onclick="seeHtml()">html보기</button>
 			<button onclick="seeMd()">markdown보기</button>
 	</div>
-
- 
-	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    
+	
+</body>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 	<script>
 		const Editor = toastui.Editor;
 	
 		const editor = new Editor({
 			  el: document.querySelector('#editor'),
-			  height: '600px',
+			  height: '500px',
 			  initialEditType: 'markdown',
-			  previewStyle: 'vertical'
+			  previewStyle: 'tab',
+			  placeholder: '내용을 입력하세요'
 			});
 		
 		seeHtml = function(){
@@ -36,4 +83,3 @@
 			alert(editor.getMarkdown());
 		}
 	</script>
-</body>
