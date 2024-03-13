@@ -21,11 +21,31 @@ function validation() {
         return false;
     }
     
-    if($("#member_id").data("data-checked") == "false" || $("#email").attr("data-checked") == "false"){
+   	if($("#member_id").data("data-checked") == "false" || $("#email").attr("data-checked") == "false"){
     	alert("아이디 및 이메일 중복확인을 해주세요");
     	return false;
     }
-    
+   	var user = {
+   			"member_id": member_id,
+   			"passwd": passwd,
+   			"email": email,
+   			"role" : "user"
+   	};
+   	
+    $.ajax({
+    	type: "post",
+    	url: "/member/signUp",
+    	contentType: "application/json",
+    	data: JSON.stringify(user),
+    	success:function(data){
+    		console.log("회원가입성공");
+    		window.location.href = "/login";
+    	},
+    	error: function(e){
+    		console.log("에러!!")
+    	}
+    	
+    });//end ajax
     
 }
 function checkIdDuplication(){
@@ -94,12 +114,13 @@ function checkEmailDuplication(){
 <body>
 	<h1>회원가입 페이지</h1>
 	<div>
-		<form method="POST" action="#" onsubmit="return validation()">
+		<!-- <form method="post" action="#" onsubmit="return validation()"> -->
+		<form>
 			<span><strong>ID</strong><br><input value="hsch" id="member_id" name="member_id" placeholder="아이디를 입력하세요" data-checked="false"></span><button type="button" onclick="checkIdDuplication()">중복확인</button><br>
 			<span><strong>PASSWD</strong><br><input value="Tmdcks3400@" id="passwd" name="passwd" placeholder="패스워드를 입력하세요" type="password"></span><br>
 			<span><strong>E-mail</strong><br><input value="hsch19@naver.com" id="email" name="email" placeholder="이메일을 입력하세요" data-checked="false"></span><button type="button" onclick="checkEmailDuplication()">중복확인</button><br><br>
-			<span><button type="submit">가입하기</button></span>
 		</form>
+			<span><button type="button" onclick="validation()">가입하기</button></span>
 	
 	</div>
 </body>
