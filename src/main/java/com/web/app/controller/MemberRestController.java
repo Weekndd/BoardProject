@@ -35,7 +35,7 @@ public class MemberRestController {
 	}
 	
 	@PostMapping("/member/signUp")
-	public void postMemberSignUp(MemberDTO memberDTO) {
+	public void postMemberSignUp(@RequestBody MemberDTO memberDTO) {
 		memberService.postMemberSignUp(memberDTO);
 	}
 	
