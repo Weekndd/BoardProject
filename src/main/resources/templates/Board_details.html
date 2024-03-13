@@ -357,10 +357,43 @@
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="/script/board.js"></script>
     
-	<script type="text/javascript">
+	<script type="text/javascript">		
 		var content = "";
-		getBoardDetails(window.location.href.split('/').pop());
-		$(document).ready(function(){
+		var board;
+		var loginMember;
+		
+		async function getBoardDetails(board_id) {
+			try {
+				const data = await $.ajax({
+					type: "get",
+					url: "/getBoardDetails/"+board_id,
+					dataType:"json",
+				})//end ajax
+
+				board = {
+						"board_id":data.board_id,
+						"title":data.title,
+						"content":data.content,
+						"writer":data.writer,
+						"email":data.email,
+				};
+				
+			}
+			catch(e) {
+				console.log("게시글 정보를 가져오는 중 에러 발생:", e);
+			}
+		}//end getBoardDetails
+		
+		$(document).ready(async function(){
+			await Promise.all([
+				getLoginMember(),
+				getBoardDetails(window.location.href.split('/').pop())
+			]);
+			
+			$("#title").text(board.title);
+			$("#writer").text(board.writer);
+			content = board.content;
+			
 			const Viewer = toastui.Editor;
 			const viewer = new Viewer({
 				  el: document.querySelector('#viewer'),
@@ -369,7 +402,17 @@
 				});
 			
 			
-		});
+			
+			if(loginMember.email != board.email) {
+	            $("#modi").css("display", "none");
+	            $("#del").css("display", "none");
+			} 
+			
+		});//end document Ready
+		
+
+	
+		
 	</script>
 
 </head>
@@ -415,9 +458,9 @@
             <h3 class="screen_out">contents</h3>
             
             <div id="viewer"></div>
-           
             <button class="likes">좋아요</button>
-            <button class="modi">수정하기</button>
+	        <button id="modi" class="modi">수정하기</button>
+	        
         </article>
         <article class="comments">
             <h3 class="screen_out">comment</h3>
@@ -432,8 +475,10 @@
             </div>
         </article>
     <a href="/board" class="return">돌아가기</a>
+    <button id="del">삭제하기</button>
     </section>
     
+
    
 
 </body>
