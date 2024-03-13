@@ -1,5 +1,6 @@
 package com.web.app.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,8 +36,13 @@ public class MemberRestController {
 	}
 	
 	@PostMapping("/member/signUp")
-	public void postMemberSignUp(MemberDTO memberDTO) {
+	public void postMemberSignUp(@RequestBody MemberDTO memberDTO) {
 		memberService.postMemberSignUp(memberDTO);
+	}
+	
+	@GetMapping("/member/getLoginMember")
+	public MemberDTO getLoginMember(@AuthenticationPrincipal SecurityUser securityUser) {			//securityUser.getAuthList().get(0)
+		return new MemberDTO(securityUser.getMember_id(), null, securityUser.getEmail(), null); //접근제한 할 때 여기에 권한넣으면 됨 위와 같은 형식으로 하면 될 듯?
 	}
 	
 	

@@ -44,8 +44,6 @@ public class BoardRestController {
 		return boardDTO;
 	}
 	
-	
-	//게시글 등록 페이지  를 만드려면 멤버 테이블을 만들고, 로그인 후 로그인 정보를 가져와서 같이 넘겨줘야한다!!!
 	@Transactional
 	@PostMapping("/board/register")
 	public void postBoard(@AuthenticationPrincipal SecurityUser securityUser,

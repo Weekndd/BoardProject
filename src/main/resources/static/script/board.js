@@ -25,8 +25,26 @@ function boardListSetUp() {
 	})//end ajax
 }
 
+	async function getLoginMember(){
+		try{
+			const data = await $.ajax({
+				"type": "GET",
+				"url": "/member/getLoginMember",
+				"dataType": "json",
+			})//end ajax
+			loginMember = {
+				"member_id" : data.member_id,
+				"email" : data.email,
+				"role" : "",  //role추가하게 되면 여기에 추가하면 됨
+			}			
+		}
+		catch(e){
+			console.log("로그인 정보를 가져오는 중 에러 발생",e)
+		}
+	}
 
-function getBoardDetails(board_id) {
+/*function getBoardDetails(board_id) {
+	board
 	$.ajax({
 		type: "get",
 		url: "/getBoardDetails/"+board_id,
@@ -40,7 +58,7 @@ function getBoardDetails(board_id) {
 			console.log("에러발생");
 		}//error
 	})//end ajax
-}
+}*/
 
 
 function postLoginData(callback){
