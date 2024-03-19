@@ -366,7 +366,7 @@
 			try {
 				const data = await $.ajax({
 					type: "get",
-					url: "/getBoardDetails/"+board_id,
+					url: "/board/"+board_id,
 					dataType:"json",
 				})//end ajax
 
@@ -475,7 +475,7 @@
             </div>
         </article>
     <a href="/board" class="return">돌아가기</a>
-    <button id="del">삭제하기</button>
+    <button id="del" onclick="">삭제하기</button>
     </section>
     
 

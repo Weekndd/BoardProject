@@ -37,6 +37,11 @@ public class BoardServiceImpl  implements BoardService {
 		boardDTO.setWriter(securityUser.getMember_id());
 		boardDTO.setEmail(securityUser.getEmail());
 	}
+
+	@Override
+	public void deletePosting(Long board_id) {
+		boardRepository.deletePosting(board_id);
+	}
 	
 
 	

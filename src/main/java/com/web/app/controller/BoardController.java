@@ -27,8 +27,8 @@ public class BoardController {
 	}
 	
 	//게시글 상세조회 페이지
-	@GetMapping("/board/{board_id}")
-	public String mappingBoardDetails(@PathVariable Long board_id) {
+	@GetMapping("/board/details/{board_id}")
+	public String mappingBoardDetails() {
 		return "Board_details";
 	}
 	

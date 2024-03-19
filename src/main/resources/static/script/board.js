@@ -9,7 +9,7 @@ function boardListSetUp() {
 				var listItem = 
 					"<tr>"+
 						"<td>"+ item.board_id+"</td>"+
-						"<td><a href=/board/"+item.board_id+">"+ item.title+"<a/></td>"+
+						"<td><a href=/board/details/"+item.board_id+">"+ item.title+"</a></td>"+
 						"<td>"+ item.writer+"</td>"+
 						"<td>"+ item.create_at+"</td>"+
 						"<td>"+ item.modified_at+"</td>"+

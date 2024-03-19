@@ -43,6 +43,13 @@ public class BoardRepositoryImpl implements BoardRepository{
 		int res = session.insert("registerBoard",boardDTO);
 		System.out.println("결과 : "+ res);
 	}
+
+
+	@Override
+	public void deletePosting(Long board_id) {
+		int res = session.delete("deletePosting",board_id);
+		System.out.println("삭제결과 : "+ res);
+	}
 	
 
 }

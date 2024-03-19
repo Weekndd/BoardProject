@@ -24,4 +24,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sysdate
 		)
 	</insert>
+	
+	<delete id="deletePosting" parameterType="long">
+		DELETE * FROM board WHERE #{board_id} = board_id
+	</delete>
 </mapper>
