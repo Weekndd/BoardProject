@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -57,4 +58,15 @@ public class BoardRestController {
 	public void deletePosting(@PathVariable Long board_id) {
 		boardService.deletePosting(board_id);
 	}
+	
+	@Transactional
+	@PutMapping("/board/{board_id}")
+	public void modifiyPosting(@RequestBody BoardDTO boardDTO) {
+		System.out.println("테스트! :"+boardDTO.getTitle());
+		System.out.println("테스트! :"+boardDTO.getContent());
+		System.out.println("테스트! :"+boardDTO.getBoard_id());
+		boardService.modifyPosting(boardDTO);
+		
+	}
+	
 }

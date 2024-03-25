@@ -15,4 +15,6 @@ public interface BoardService {
 
 	void deletePosting(Long board_id);
 
+	void modifyPosting(BoardDTO boardDTO);
+
 }

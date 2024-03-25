@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Toast UI Editor -->
+	<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+	<style>
+        * {
+            text-align:  center;
+        }
+        #editor {
+            border : 1px solid;
+            width : 50%;
+            margin : 0 auto;
+        }
+    </style>
+	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
+	</script>
+	
+	<script type="text/javascript" src="/script/board.js"></script>
+	<script type="text/javascript">
+		var board;
+		var loginMember;
+		
+		$(document).ready(async function() {
+			await Promise.all([
+				getLoginMember(),
+				getBoardDetails(window.location.href.split('/').pop())
+			]);
+			$("#title").val(board.title);
+			
+			//toast UI 	
+			const Editor = toastui.Editor;
+			
+			const editor = new Editor({
+				  el: document.querySelector('#editor'),
+				  height: '500px',
+				  initialEditType: 'wysiwyg',
+				  previewStyle: 'tab',
+				  initialValue: board.content
+				});
+		
+			
+			seeHtml = function(){
+				alert(editor.getHTML());
+			}
+			seeMd = function(){
+				alert(editor.getMarkdown());
+			}
+			
+			modifyPosting = function() {
+				var modifiedBoard = board;
+				modifiedBoard.title = $("#title").val();
+				modifiedBoard.content = editor.getHTML();
+				
+				if(board.title == "") {
+					alert("제목을 입력해주세요");
+					return false;
+				}
+				if(board.content == "<p><br></p>") {
+					alert("내용을 입력해주세요");
+					return false;
+				}
+				
+				const result = confirm("정말로 수정하시겠습니까?");
+				if (result) {
+					$.ajax({
+						type: "PUT",
+						url: "/board/" + board.board_id,
+						data: JSON.stringify(modifiedBoard),
+						contentType: "application/json",
+						sucess: function() {
+							console.log("수정성공");
+						},
+						error: function() {
+							console.log("에러발생");
+						},
+					})//end ajax
+					window.location.href = "/board";
+				} 
+				else {
+				 
+				}
+				
+			}//end modifyPosting
+			
+		});//end document.ready
+	
+
+	</script>
+</head>
+<body>
+	<h1>글 수정하기</h1>
+	<div>
+		<form action="/board/putPosting">
+			<input placeholder="제목을 입력하세요" name="title" id="title">
+			<br>
+			<br>
+			<div id="editor" name="content"></div>
+		</form>
+			<button onclick="modifyPosting()">글 수정하기</button>
+			<button onclick="seeHtml()">html보기</button>
+			<button onclick="seeMd()">markdown보기</button>
+	</div>
+    
+	
+</body>
+</html>
