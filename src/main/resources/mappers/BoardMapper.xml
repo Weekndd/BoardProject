@@ -24,4 +24,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sysdate
 		)
 	</insert>
+	
+	<delete id="deletePosting" parameterType="long">
+		DELETE board WHERE #{board_id} = board_id
+	</delete>
+	
+	<update id="modifyPosting" parameterType="boardDTO">
+		UPDATE board 
+		SET 
+			title = #{title},
+			content = #{content},
+			modified_at = sysdate
+		WHERE
+			board_id = #{board_id}
+	</update>
+	
 </mapper>

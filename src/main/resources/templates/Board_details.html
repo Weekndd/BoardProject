@@ -361,29 +361,6 @@
 		var content = "";
 		var board;
 		var loginMember;
-		
-		async function getBoardDetails(board_id) {
-			try {
-				const data = await $.ajax({
-					type: "get",
-					url: "/getBoardDetails/"+board_id,
-					dataType:"json",
-				})//end ajax
-
-				board = {
-						"board_id":data.board_id,
-						"title":data.title,
-						"content":data.content,
-						"writer":data.writer,
-						"email":data.email,
-				};
-				
-			}
-			catch(e) {
-				console.log("게시글 정보를 가져오는 중 에러 발생:", e);
-			}
-		}//end getBoardDetails
-		
 		$(document).ready(async function(){
 			await Promise.all([
 				getLoginMember(),
@@ -410,7 +387,28 @@
 			
 		});//end document Ready
 		
-
+		function modifyPage() {
+			window.location.href = "/board/modify/"+board.board_id;
+		}
+		
+		function deletePosting() {
+			const result = confirm("정말로 삭제하시겠습니까?");
+			
+			if(result){
+				$.ajax({
+					"url": "/board/"+ board.board_id,
+					"type": "DELETE",
+					success: function(){
+						alert("게시물이 삭제되었습니다.");
+						window.location.href = "/board";
+					},
+					error: function(){
+						console.log()
+					}
+				});//end ajax
+			}//end if
+			
+		}
 	
 		
 	</script>
@@ -459,7 +457,7 @@
             
             <div id="viewer"></div>
             <button class="likes">좋아요</button>
-	        <button id="modi" class="modi">수정하기</button>
+	        <button id="modi" class="modi" onclick="modifyPage()">수정하기</button>
 	        
         </article>
         <article class="comments">
@@ -475,7 +473,7 @@
             </div>
         </article>
     <a href="/board" class="return">돌아가기</a>
-    <button id="del">삭제하기</button>
+    <button id="del" onclick="deletePosting()">삭제하기</button>
     </section>
     
 

@@ -13,5 +13,9 @@ public interface BoardRepository {
 	void register(BoardDTO boardDTO);
 
 	List<BoardDTO> getBoardList();
+
+	void deletePosting(Long board_id);
+
+	void modifyPosting(BoardDTO boardDTO);
 	
 }

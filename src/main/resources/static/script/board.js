@@ -9,7 +9,7 @@ function boardListSetUp() {
 				var listItem = 
 					"<tr>"+
 						"<td>"+ item.board_id+"</td>"+
-						"<td><a href=/board/"+item.board_id+">"+ item.title+"<a/></td>"+
+						"<td><a href=/board/details/"+item.board_id+">"+ item.title+"</a></td>"+
 						"<td>"+ item.writer+"</td>"+
 						"<td>"+ item.create_at+"</td>"+
 						"<td>"+ item.modified_at+"</td>"+
@@ -43,22 +43,18 @@ function boardListSetUp() {
 		}
 	}
 
-/*function getBoardDetails(board_id) {
-	board
-	$.ajax({
-		type: "get",
-		url: "/getBoardDetails/"+board_id,
-		dataType:"json",
-		success: function(data) {
-			$("#title").text(data.title);
-			$("#writer").text(data.writer);
-			content = data.content
-		},
-		error: function(e){ //요청에 대한 응답이 error인 경우에 동작할 코드
-			console.log("에러발생");
-		}//error
-	})//end ajax
-}*/
+	async function getBoardDetails(board_id) {
+				try {
+					 board = await $.ajax({
+						type: "get",
+						url: "/board/"+board_id,
+						dataType:"json",
+					})//end ajax
+				}
+				catch(e) {
+					console.log("게시글 정보를 가져오는 중 에러 발생:", e);
+				}
+			}//end getBoardDetails
 
 
 function postLoginData(callback){

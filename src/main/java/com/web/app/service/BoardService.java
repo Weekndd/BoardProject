@@ -13,4 +13,8 @@ public interface BoardService {
 
 	List<BoardDTO> getBaordList();
 
+	void deletePosting(Long board_id);
+
+	void modifyPosting(BoardDTO boardDTO);
+
 }

@@ -41,7 +41,19 @@ public class BoardRepositoryImpl implements BoardRepository{
 	@Override
 	public void register(BoardDTO boardDTO) {
 		int res = session.insert("registerBoard",boardDTO);
-		System.out.println("결과 : "+ res);
+	}
+
+
+	@Override
+	public void deletePosting(Long board_id) {
+		int res = session.delete("deletePosting",board_id);
+	}
+
+
+	@Override
+	public void modifyPosting(BoardDTO boardDTO) {
+		int res = session.update("modifyPosting",boardDTO);
+		System.out.println("수정 결과 : " + res);
 	}
 	
 
