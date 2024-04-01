@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.dto.BoardDTO;
+import com.web.app.dto.Criteria;
+import com.web.app.dto.PageDTO;
 import com.web.app.security.SecurityUser;
 import com.web.app.service.BoardService;
 
@@ -33,10 +35,20 @@ public class BoardRestController {
 	
 	//게시글 리스트
 	@GetMapping("/getBoardList")
-	public List<BoardDTO> getBoardList () {
+	public List<BoardDTO> getBoardList() {
 		List<BoardDTO> boardList = boardService.getBaordList();
-		System.out.println("가져옴");
 		return boardList;
+	}
+	
+	@GetMapping("/getBoardListWithPaging")
+	public List<BoardDTO> getBoardListWithPaging(@RequestParam int pageNum, int amount) {
+		List<BoardDTO> boardList = boardService.getBaordListWithPaging(new Criteria(pageNum, amount));
+		return boardList;
+	}
+	@GetMapping("/getPageInfo/{pageNum}")
+	public PageDTO getPageInfo(@PathVariable int pageNum) {
+		PageDTO pageDTO = boardService.getPageInfo(pageNum);
+		return pageDTO;
 	}
 	
 	//상세 게시물
@@ -62,11 +74,7 @@ public class BoardRestController {
 	@Transactional
 	@PutMapping("/board/{board_id}")
 	public void modifiyPosting(@RequestBody BoardDTO boardDTO) {
-		System.out.println("테스트! :"+boardDTO.getTitle());
-		System.out.println("테스트! :"+boardDTO.getContent());
-		System.out.println("테스트! :"+boardDTO.getBoard_id());
 		boardService.modifyPosting(boardDTO);
-		
 	}
 	
 }

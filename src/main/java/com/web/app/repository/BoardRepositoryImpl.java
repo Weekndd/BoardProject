@@ -6,7 +6,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.web.app.dto.BoardDTO;
+import com.web.app.dto.Criteria;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -14,15 +16,6 @@ import lombok.RequiredArgsConstructor;
 public class BoardRepositoryImpl implements BoardRepository{
 	private final SqlSessionTemplate session;
 	
-	public void test() {
-		BoardDTO boardDto = new BoardDTO();
-		boardDto.setTitle("Testing");
-		boardDto.setContent("TestContents");
-		boardDto.setWriter("hsch");
-		boardDto.setEmail("hsch19@naver.com");
-		int res = session.insert("TestInsert",boardDto);
-		System.out.println("결과 : "+ res);
-	}	
 	
 	
 	@Override
@@ -30,7 +23,11 @@ public class BoardRepositoryImpl implements BoardRepository{
 		List<BoardDTO> boardList = session.selectList("getBoardList");
 		return boardList;
 	}
-
+	@Override
+	public List<BoardDTO> getBoardListWithPaging(Criteria criteria) {
+		List<BoardDTO> list = session.selectList("getBoardListWithPaging",criteria);
+		return list;
+	}
 
 	@Override
 	public BoardDTO getBoard(Long board_id) {
@@ -53,8 +50,13 @@ public class BoardRepositoryImpl implements BoardRepository{
 	@Override
 	public void modifyPosting(BoardDTO boardDTO) {
 		int res = session.update("modifyPosting",boardDTO);
-		System.out.println("수정 결과 : " + res);
 	}
 	
-
+	@Override
+	public long getTotalPostingCount() {
+		long total = session.selectOne("getTotalPostingCount");
+		return total;
+	}
+	
+	
 }
