@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.web.app.dto.BoardDTO;
+import com.web.app.dto.Criteria;
+import com.web.app.dto.PageDTO;
 import com.web.app.repository.BoardRepository;
 import com.web.app.security.SecurityUser;
 
@@ -18,6 +20,11 @@ public class BoardServiceImpl  implements BoardService {
 	@Override
 	public List<BoardDTO> getBaordList() {
 		List<BoardDTO> boardList = boardRepository.getBoardList();
+		return boardList;
+	}
+	@Override
+	public List<BoardDTO> getBaordListWithPaging(Criteria criteria) {
+		List<BoardDTO> boardList = boardRepository.getBoardListWithPaging(criteria);
 		return boardList;
 	}
 	
@@ -48,6 +55,13 @@ public class BoardServiceImpl  implements BoardService {
 		boardRepository.modifyPosting(boardDTO);
 		
 	}
+	@Override
+	public PageDTO getPageInfo(int pageNum) {
+		long totalPosting = boardRepository.getTotalPostingCount();
+		PageDTO pageDTO = new PageDTO(new Criteria(pageNum,10), totalPosting);
+		return pageDTO;
+	}
+
 	
 
 	

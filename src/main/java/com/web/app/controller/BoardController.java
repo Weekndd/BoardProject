@@ -21,10 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class BoardController {
 	
-	//홈화면
-	@GetMapping("/board")
+	//게시글 목록
+	@GetMapping("/boardList/{pageNum}")
 	public String mappingBoardList(HttpServletRequest request) {
-		System.out.println("보드 컨트롤러 ======================================");
 		return "Board_list";
 	}
 	

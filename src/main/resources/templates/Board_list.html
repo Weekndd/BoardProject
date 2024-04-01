@@ -16,13 +16,18 @@
     <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="/script/board.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			boardListSetUp();
+		var pageNum = window.location.href.split('/').pop();
+		console.log(pageNum);
+		var page;
+		
+		$(document).ready(async function(){
+			await Promise.all([
+				getPageInfo(pageNum),
+			]);
 			
-		
-		
-		
-		});
+			boardListSetUpWithPaging(page.criteria)
+			
+		});//end document Ready
 	</script>
 
 </head>
@@ -61,10 +66,10 @@
     </div>
     <div class="page">
         <h2 class="screen_out">현재페이지</h2>
-        <p><strong>1</strong></p>
+        <p></p>
         <div class="buttons">
-            <button>이전 페이지</button>
-            <button>다음 페이지 </button>
+            <button id="prev">이전 페이지</button>
+            <button id="next">다음 페이지</button>
         </div>
     </div>
 

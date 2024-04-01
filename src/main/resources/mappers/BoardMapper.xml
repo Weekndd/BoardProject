@@ -39,4 +39,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			board_id = #{board_id}
 	</update>
 	
+	<!-- criteria를 파라미터 타입으로 받고 있지만 따로 선언하지 않아도 #{pageNum}과 #{amount}를 알아서 연결하고 있는 모습... -->
+	<select id="getBoardListWithPaging" resultType="boardDTO">
+	<![CDATA[
+		SELECT
+			BOARD_ID,
+			TITLE,
+			CONTENT,
+			WRITER,
+			EMAIL,
+			CREATE_AT,
+			MODIFIED_AT
+		FROM (
+		    SELECT  /*+ INDEX_DESC(board board_pk) */ rownum rn, board.*
+		    FROM board
+		    WHERE rownum > 0 and rownum <=(#{pageNum} * #{amount})
+		)
+		WHERE rn > (#{pageNum} - 1) * #{amount}
+	]]>
+	</select>
+	
+	<select id="getTotalPostingCount" resultType="long">
+		SELECT count(board_id)
+		FROM board
+	</select>
+	
 </mapper>
