@@ -15,12 +15,13 @@ public interface BoardService {
 
 	List<BoardDTO> getBaordList();
 	
-	List<BoardDTO> getBaordListWithPaging(Criteria criteria);
+	List<BoardDTO> getBaordListWithPaging(int pageNum, String type, String keyword);
 
 	void deletePosting(Long board_id);
 
 	void modifyPosting(BoardDTO boardDTO);
 
-	PageDTO getPageInfo(int pageNum);
+	PageDTO getPageInfo(int pageNum, String type, String keyword);
+
 	
 }

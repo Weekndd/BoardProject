@@ -23,9 +23,16 @@ public class BoardServiceImpl  implements BoardService {
 		return boardList;
 	}
 	@Override
-	public List<BoardDTO> getBaordListWithPaging(Criteria criteria) {
+	public List<BoardDTO> getBaordListWithPaging(int pageNum, String type, String keyword) {
+		Criteria criteria = getCriteria(pageNum, type, keyword);
 		List<BoardDTO> boardList = boardRepository.getBoardListWithPaging(criteria);
 		return boardList;
+	}
+	private static Criteria getCriteria(int pageNum, String type, String keyword) {
+		Criteria criteria = new Criteria(pageNum, 10);
+		criteria.setType(type);
+		criteria.setKeyword(keyword);
+		return criteria;
 	}
 	
 	@Override
@@ -55,10 +62,12 @@ public class BoardServiceImpl  implements BoardService {
 		boardRepository.modifyPosting(boardDTO);
 		
 	}
+	
 	@Override
-	public PageDTO getPageInfo(int pageNum) {
-		long totalPosting = boardRepository.getTotalPostingCount();
-		PageDTO pageDTO = new PageDTO(new Criteria(pageNum,10), totalPosting);
+	public PageDTO getPageInfo(int pageNum, String type, String keyword) {
+		Criteria criteria = getCriteria(pageNum, type, keyword);
+		long totalPosting = boardRepository.getTotalPostingCount(criteria);
+		PageDTO pageDTO = new PageDTO(criteria, totalPosting);
 		return pageDTO;
 	}
 

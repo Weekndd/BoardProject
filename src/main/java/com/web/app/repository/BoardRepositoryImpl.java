@@ -1,6 +1,7 @@
 package com.web.app.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -53,9 +54,15 @@ public class BoardRepositoryImpl implements BoardRepository{
 	}
 	
 	@Override
-	public long getTotalPostingCount() {
-		long total = session.selectOne("getTotalPostingCount");
+	public long getTotalPostingCount(Criteria criteria) {
+		long total = session.selectOne("getTotalPostingCount",criteria);
 		return total;
+	}
+	
+	@Override
+	public List<BoardDTO> searchTest(String string, Map<String, Map<String, String>> outer) {
+		List<BoardDTO> list = session.selectList("searchTest", outer);
+		return list;
 	}
 	
 	

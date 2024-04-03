@@ -400,7 +400,7 @@
 					"type": "DELETE",
 					success: function(){
 						alert("게시물이 삭제되었습니다.");
-						window.location.href = "/board";
+						window.location.href = "/boardList?pageNum=1";
 					},
 					error: function(){
 						console.log()
@@ -472,7 +472,7 @@
             <button>등록</button>
             </div>
         </article>
-    <a href="/board" class="return">돌아가기</a>
+    <a onclick="history.back()" class="return">돌아가기</a>
     <button id="del" onclick="deletePosting()">삭제하기</button>
     </section>
     

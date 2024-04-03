@@ -16,8 +16,20 @@
     <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="/script/board.js"></script>
 	<script type="text/javascript">
-		var pageNum = window.location.href.split('/').pop();
+		const url = new URL(window.location.href);
+		const pageNum = url.searchParams.get("pageNum");
+		const type= url.searchParams.get("type");
+		const keyword = url.searchParams.get("keyword");
+		var extraUrl = "";
+		if(type!=null){
+			extraUrl += "&type="+type;
+		}
+		if(keyword!=null){
+			extraUrl += "&keyword="+keyword;
+		}
 		console.log(pageNum);
+		console.log(keyword);
+		console.log(type);
 		var page;
 		
 		$(document).ready(async function(){
@@ -26,25 +38,30 @@
 			]);
 			
 			boardListSetUpWithPaging(page.criteria)
-			
+			$("#searchBtn").on("click",function(){
+				var keyword = $("#keyword").val();
+				var type = $("#type").val();
+				window.location.href = "/boardList?pageNum=1&type="+type+"&keyword="+keyword
+			});
 		});//end document Ready
 	</script>
 
 </head>
 
 <body>
-    <h1>게시판</h1>
+    <h1 onclick="backToBoardList()">게시판</h1>
     <div class="head">
         <h2 class="screen_out">검색</h2>
         <p class="totalBoard">총 <strong class="here"></strong>개의 게시물이 있습니다.</p>
         <div class="search">
-            <select>
-                <option>ID</option>
-                <option>writer</option>
-                <option>title</option>
-                <option>create</option>
-                <option>modified</option>
-            </select><input type="text">
+            <select id="type">
+                <option id="typeA"value="">전체보기</option>
+                <option id="typeT" value="T">title</option>
+                <option id="typeC" value="C">content</option>
+                <option id="typeW" value="W">writer</option>
+                <option id="typeTC" value="TC">title + content</option>
+            </select><input id="keyword" type="text" name="keyword" placeholder="검색어를 입력하세요">
+            <button id="searchBtn">&nbspSEARCH&nbsp</button>
         </div>
     </div>
     <div class="table">

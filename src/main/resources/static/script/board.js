@@ -1,16 +1,26 @@
 
+function backToBoardList(){
+	window.location.href="/boardList?pageNum=1";
+}
+
 async function getPageInfo(pageNum) {
 	const data = await $.ajax({
 			type : "GET",
-			url : "/getPageInfo/"+pageNum,
+			url : "/getPageInfo?pageNum="+pageNum+"&type="+type+"&keyword="+keyword,
 			dataType: "json",
+			success: function(data){
+				console.log(data)
+			},
+			error: function(e){
+				console.log(e)
+			}
 			});//end ajax
 	page = data;
 }
 function boardListSetUpWithPaging(criteria) {
 	$.ajax({
-		type: "GET",
-		url: "/getBoardListWithPaging?pageNum="+criteria.pageNum+"&amount="+criteria.amount,//서버 요청 주소
+		"type": "GET",
+		url: "/getBoardListWithPaging?pageNum="+criteria.pageNum+"&type="+criteria.type+"&keyword="+keyword,//서버 요청 주소
 		dataType:"json",
 		success: function(data) {
 			data.forEach(function(item){
@@ -24,26 +34,42 @@ function boardListSetUpWithPaging(criteria) {
 						"</tr>";
 					$("tbody").append(listItem);
 				})
+				
+				$("#keyword").val(keyword);
 				$(".totalBoard .here").append(page.total);
+				if(type=="T"){
+					$("#typeT").attr("selected", true);
+				}
+				else if(type=="C"){
+					$("#typeC").attr("selected", true);
+				}
+				else if(type=="W"){
+					$("#typeW").attr("selected", true);
+				}
+				else if(type=="TC"){
+					$("#typeTC").attr("selected", true);
+				}
+				else {
+					$("#typeA").attr("selected", true);
+					$("#keyword").val("");
+				}
 				
 				var pagination = "";
 				for(var i=page.startPage; i<=page.endPage; i++){
 					if(criteria.pageNum == i){
-						pagination += "<Strong><a href=/boardList/"+ i +">&nbsp"+i+"&nbsp</a></Strong>"
+						pagination += "<Strong><a href=/boardList?pageNum="+ i+""+extraUrl+">&nbsp"+i+"&nbsp</a></Strong>"
 					}
 					else {
-						pagination += "<a href=/boardList/"+ i +">&nbsp"+i+"&nbsp</a>";
+						pagination += "<a href=/boardList?pageNum="+ i +""+extraUrl+">&nbsp"+i+"&nbsp</a>";
 					}
 				}
-				console.log("prev: "+page.prev);
-				console.log("next: "+page.next);
 				$(".page p").append(pagination);
 				
 				if(page.next) {
-					$(".page .buttons #next").attr("onclick","location.href='/boardList/"+(page.startPage+10)+"'");
+					$(".page .buttons #next").attr("onclick","location.href='/boardList?pageNum="+(page.startPage+10)+extraUrl+"'");
 				}
 				if(page.prev) {
-					$(".page .buttons #prev").attr("onclick","location.href='/boardList/"+(page.startPage-10)+"'");
+					$(".page .buttons #prev").attr("onclick","location.href='/boardList?pageNum="+(page.startPage-10)+extraUrl+"'");
 				}
 		},
 		error: function(e){
