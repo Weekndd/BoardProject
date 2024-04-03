@@ -46,6 +46,6 @@ public class MemberController {
         accessTokenCookie.setSecure(false);
 
         response.addCookie(accessTokenCookie);
-        return "redirect:/boardList/1";  //로그인 된 이후 주소 바꾸고싶어서...redirect로 해봤음
+        return "redirect:/boardList?pageNum=1";  //로그인 된 이후 주소 바꾸고싶어서...redirect로 해봤음
 	}
 }

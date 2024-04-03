@@ -41,13 +41,13 @@ public class BoardRestController {
 	}
 	
 	@GetMapping("/getBoardListWithPaging")
-	public List<BoardDTO> getBoardListWithPaging(@RequestParam int pageNum, int amount) {
-		List<BoardDTO> boardList = boardService.getBaordListWithPaging(new Criteria(pageNum, amount));
+	public List<BoardDTO> getBoardListWithPaging(@RequestParam int pageNum, String type, String keyword) {
+		List<BoardDTO> boardList = boardService.getBaordListWithPaging(pageNum, type, keyword);
 		return boardList;
 	}
-	@GetMapping("/getPageInfo/{pageNum}")
-	public PageDTO getPageInfo(@PathVariable int pageNum) {
-		PageDTO pageDTO = boardService.getPageInfo(pageNum);
+	@GetMapping("/getPageInfo")
+	public PageDTO getPageInfo(@RequestParam int pageNum, String type, String keyword) {
+		PageDTO pageDTO = boardService.getPageInfo(pageNum, type, keyword);
 		return pageDTO;
 	}
 	

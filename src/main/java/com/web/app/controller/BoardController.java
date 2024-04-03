@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BoardController {
 	
 	//게시글 목록
-	@GetMapping("/boardList/{pageNum}")
+	@GetMapping("/boardList")
 	public String mappingBoardList(HttpServletRequest request) {
 		return "Board_list";
 	}

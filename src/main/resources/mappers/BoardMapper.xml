@@ -4,6 +4,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="BoardMapper">
+
+	<!-- 검색 WHERE조건을 따로 뽑아서 간단하게 쓸 수 있도록 빼둔것-->
+	<sql id="search">
+		<trim prefix="(" suffix=")and">
+			<!-- myBatis는 getter와 setter로 동작해서 getTypeArr메서드를 실행시킴 -->
+			<foreach collection="typeArr" item="type" separator="OR">
+				<if test="type == 'T'.toString()">
+				title like '%'||#{keyword}||'%'
+				</if>
+				<if test="type == 'C'.toString()">
+				content like '%'||#{keyword}||'%'
+				</if>
+				<if test="type == 'W'.toString()">
+				writer like '%'||#{keyword}||'%'
+				</if>
+			</foreach>
+		</trim>
+	</sql>
 	
 	<select id="getBoardList" resultType="boardDTO">
 		SELECT * FROM board
@@ -39,8 +57,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			board_id = #{board_id}
 	</update>
 	
-	<!-- criteria를 파라미터 타입으로 받고 있지만 따로 선언하지 않아도 #{pageNum}과 #{amount}를 알아서 연결하고 있는 모습... -->
-	<select id="getBoardListWithPaging" resultType="boardDTO">
+	<!-- criteria를 파라미터 타입으로 받고 있지만 따로 선언하지 않아도 #{pageNum}과 #{amount}를 알아서 연결하고 있는 모습... -->	
+	<!-- 검색과 페이징 처리 -->
+ 	<select id="getBoardListWithPaging" resultType="boardDTO">
 	<![CDATA[
 		SELECT
 			BOARD_ID,
@@ -53,15 +72,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM (
 		    SELECT  /*+ INDEX_DESC(board board_pk) */ rownum rn, board.*
 		    FROM board
-		    WHERE rownum > 0 and rownum <=(#{pageNum} * #{amount})
+		    WHERE 
+	]]>
+		<include refid="search"></include>
+	<![CDATA[
+		    rownum > 0 and rownum <=(#{pageNum} * #{amount})
 		)
 		WHERE rn > (#{pageNum} - 1) * #{amount}
 	]]>
 	</select>
 	
+	
 	<select id="getTotalPostingCount" resultType="long">
 		SELECT count(board_id)
 		FROM board
+		WHERE
+			<include refid="search"></include> 
+		board_id > 0
 	</select>
 	
+	
+	<select id="searchTest" resultType="boardDTO">
+		<![CDATA[
+		SELECT * FROM board
+		WHERE
+		]]>
+		
+		<trim suffix="and">
+			<foreach collection="map" index="key" item="val" separator="OR" open="(" close=")">
+				<if test="key=='T'.toString()">
+				title like #{val}
+				</if>
+<!--  				<if test="key=='C'.toString()">
+				content like #{val}
+				</if> -->
+				
+			</foreach>
+		</trim>
+
+		<![CDATA[
+		rownum  < 10
+		]]>
+	</select>
 </mapper>
