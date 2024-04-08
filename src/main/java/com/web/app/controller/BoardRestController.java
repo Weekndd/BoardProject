@@ -3,14 +3,11 @@ package com.web.app.controller;
 import java.util.List;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.dto.BoardDTO;
-import com.web.app.dto.Criteria;
 import com.web.app.dto.PageDTO;
 import com.web.app.security.SecurityUser;
 import com.web.app.service.BoardService;
@@ -34,18 +31,12 @@ public class BoardRestController {
 	private final BoardService boardService;
 	
 	//게시글 리스트
-	@GetMapping("/getBoardList")
-	public List<BoardDTO> getBoardList() {
-		List<BoardDTO> boardList = boardService.getBaordList();
-		return boardList;
-	}
-	
-	@GetMapping("/getBoardListWithPaging")
+	@GetMapping("/boardListWithPaging")
 	public List<BoardDTO> getBoardListWithPaging(@RequestParam int pageNum, String type, String keyword) {
 		List<BoardDTO> boardList = boardService.getBaordListWithPaging(pageNum, type, keyword);
 		return boardList;
 	}
-	@GetMapping("/getPageInfo")
+	@GetMapping("/pageInfo")
 	public PageDTO getPageInfo(@RequestParam int pageNum, String type, String keyword) {
 		PageDTO pageDTO = boardService.getPageInfo(pageNum, type, keyword);
 		return pageDTO;
