@@ -3,6 +3,7 @@ package com.web.app.repository;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.web.app.domain.Member;
 import com.web.app.dto.MemberDTO;
 import com.web.app.security.SecurityUser;
 
@@ -15,8 +16,8 @@ public class MemberRepositoryImpl implements MemberRepository{
 	private final SqlSessionTemplate session;
 
 	@Override
-	public void postMemberSignUp(MemberDTO memberDTO) {
-		session.insert("joinMember",memberDTO);
+	public void postMemberSignUp(Member member) {
+		session.insert("signUpMember", member);
 	}
 
 	@Override

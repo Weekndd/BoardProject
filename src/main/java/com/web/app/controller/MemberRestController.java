@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.dto.MemberDTO;
+import com.web.app.dto.MemberSignUpRequsetDTO;
 import com.web.app.repository.MemberRepository;
 import com.web.app.security.SecurityUser;
 import com.web.app.service.MemberService;
@@ -37,8 +38,8 @@ public class MemberRestController {
 	}
 	
 	@PostMapping("/member")
-	public void postMemberSignUp(@RequestBody MemberDTO memberDTO) {
-		memberService.postMemberSignUp(memberDTO);
+	public void postMemberSignUp(@RequestBody MemberSignUpRequsetDTO memberSignUpRequsetDTO) {
+		memberService.postMemberSignUp(memberSignUpRequsetDTO);
 	}
 	
 	@GetMapping("/member")

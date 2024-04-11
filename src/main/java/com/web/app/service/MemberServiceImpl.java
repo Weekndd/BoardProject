@@ -7,7 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.web.app.domain.Member;
 import com.web.app.dto.MemberDTO;
+import com.web.app.dto.MemberSignUpRequsetDTO;
 import com.web.app.repository.MemberRepository;
 import com.web.app.util.JwtToken;
 import com.web.app.util.JwtTokenProvider;
@@ -25,10 +27,18 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	@Transactional
-	public void postMemberSignUp(MemberDTO memberDTO) {
-		String encodingPasswd = passwordEncoder.encode(memberDTO.getPasswd());
-		memberDTO.setPasswd(encodingPasswd);
-		memberRepository.postMemberSignUp(memberDTO);
+	public void postMemberSignUp(MemberSignUpRequsetDTO memberSignUpRequsetDTO) {
+		Member member = createNewMember(memberSignUpRequsetDTO);
+		memberRepository.postMemberSignUp(member);
+	}
+	
+	private Member createNewMember(MemberSignUpRequsetDTO memberSignUpRequsetDTO) {
+		String encodingPasswd = passwordEncoder.encode(memberSignUpRequsetDTO.getPasswd());
+		Member newMember = new Member(memberSignUpRequsetDTO.getMember_id(),
+				encodingPasswd,
+				memberSignUpRequsetDTO.getEmail(),
+				memberSignUpRequsetDTO.getRole());
+		return newMember;
 	}
 	
 	@Override
@@ -47,15 +57,5 @@ public class MemberServiceImpl implements MemberService{
 		//3. 인증 정보를 기반으로 JWT토큰 생성
 		JwtToken jwtToken = jwtTokenProvider.generateToken(authentication);
 		return jwtToken;
-	}
-
-	@Override
-	public MemberDTO postMemberSignUpValidation(String member_id, String email) {
-		MemberDTO responseMemberDTO = new MemberDTO();
-		MemberDTO memberDTO = memberRepository.findMemberByMember_id(member_id);
-		responseMemberDTO.setMember_id(memberDTO.getMember_id());
-		memberDTO = memberRepository.findMemberByEmail(email);
-		responseMemberDTO.setEmail(memberDTO.getEmail());
-		return responseMemberDTO;
 	}
 }
