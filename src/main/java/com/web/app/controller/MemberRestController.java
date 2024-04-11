@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.dto.MemberDTO;
+import com.web.app.dto.MemberSignUpRequsetDTO;
 import com.web.app.repository.MemberRepository;
 import com.web.app.security.SecurityUser;
 import com.web.app.service.MemberService;
@@ -30,17 +31,18 @@ public class MemberRestController {
 	public MemberDTO getDuplicationMemberId(@PathVariable String member_id) {
 		return memberRepository.findMemberByMember_id(member_id);
 	}
+	
 	@GetMapping("/member/signUp/validation/email={email}")
 	public MemberDTO getDuplicationEmail(@PathVariable String email) {
 		return memberRepository.findMemberByEmail(email);
 	}
 	
-	@PostMapping("/member/signUp")
-	public void postMemberSignUp(@RequestBody MemberDTO memberDTO) {
-		memberService.postMemberSignUp(memberDTO);
+	@PostMapping("/member")
+	public void postMemberSignUp(@RequestBody MemberSignUpRequsetDTO memberSignUpRequsetDTO) {
+		memberService.postMemberSignUp(memberSignUpRequsetDTO);
 	}
 	
-	@GetMapping("/member/getLoginMember")
+	@GetMapping("/member")
 	public MemberDTO getLoginMember(@AuthenticationPrincipal SecurityUser securityUser) {			//securityUser.getAuthList().get(0)
 		return new MemberDTO(securityUser.getMember_id(), null, securityUser.getEmail(), null); //접근제한 할 때 여기에 권한넣으면 됨 위와 같은 형식으로 하면 될 듯?
 	}

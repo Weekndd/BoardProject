@@ -28,7 +28,8 @@ public class MemberController {
 	public String login() {
 		return "login";
 	}
-	@PostMapping("/postLoginData")
+	
+	@PostMapping("/loginData")
 	public String postLoginData(SecurityUser user, HttpServletResponse response) {
 		String member_id = user.getUsername();
 		String passwd = user.getPassword();

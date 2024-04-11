@@ -6,10 +6,10 @@ function backToBoardList(){
 async function getPageInfo(pageNum) {
 	const data = await $.ajax({
 			type : "GET",
-			url : "/getPageInfo?pageNum="+pageNum+"&type="+type+"&keyword="+keyword,
+			url : "/pageInfo?pageNum="+pageNum+"&type="+type+"&keyword="+keyword,
 			dataType: "json",
 			success: function(data){
-				console.log(data)
+				
 			},
 			error: function(e){
 				console.log(e)
@@ -20,7 +20,7 @@ async function getPageInfo(pageNum) {
 function boardListSetUpWithPaging(criteria) {
 	$.ajax({
 		"type": "GET",
-		url: "/getBoardListWithPaging?pageNum="+criteria.pageNum+"&type="+criteria.type+"&keyword="+keyword,//서버 요청 주소
+		url: "/boardListWithPaging?pageNum="+criteria.pageNum+"&type="+criteria.type+"&keyword="+keyword,//서버 요청 주소
 		dataType:"json",
 		success: function(data) {
 			data.forEach(function(item){
@@ -82,7 +82,7 @@ async function getLoginMember(){
 	try{
 		const data = await $.ajax({
 			"type": "GET",
-			"url": "/member/getLoginMember",
+			"url": "/member",
 			"dataType": "json",
 		});//end ajax
 		loginMember = {
@@ -108,31 +108,5 @@ async function getBoardDetails(board_id) {
 		console.log("게시글 정보를 가져오는 중 에러 발생:", e);
 	}
 }//end getBoardDetails
-
-
-function postLoginData(callback){
-	var user = {
-		"member_id": $("#user_id").val(),
-		"passwd": $("#psw").val()
-	}
-	
-		$.ajax({
-		type: "post",
-		url: "/postLoginData",
-		contentType: "application/json",
-		data: JSON.stringify(user),
-		
-		dataType:"json",
-		success: function(data) {
-			callback(null,data)
-			console.log("포스트로그인데이터 : "+data.accessToken);
-			
-		},
-		error: function(e){ //요청에 대한 응답이 error인 경우에 동작할 코드
-			console.log("에러발생");
-		}//error
-	})//end ajax
-	
-}
 
 	

@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="MemberMapper">
 	
-	<insert id="joinMember" parameterType="MemberDTO">
+	<insert id="signUpMember" parameterType="Member">
 		INSERT INTO member VALUES (
 			#{member_id},
 			#{passwd},
