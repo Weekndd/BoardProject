@@ -7,8 +7,10 @@ public interface MemberRepository {
 
 	void postMemberSignUp(Member newMember);
 
-	MemberDTO findMemberByMember_id(String member_id);
+	Member findMemberByMember_id(String member_id);
+	
+	int DuplicationCheckMember_id(String member_id);
 
-	MemberDTO findMemberByEmail(String email);
+	int DuplicationCheckEmail(String email);
 
 }

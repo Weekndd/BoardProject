@@ -28,13 +28,13 @@ public class MemberRestController {
 	private final MemberRepository memberRepository;
 	
 	@GetMapping("/member/signUp/validation/member_id={member_id}")
-	public MemberDTO getDuplicationMemberId(@PathVariable String member_id) {
-		return memberRepository.findMemberByMember_id(member_id);
+	public int getDuplicationMemberId(@PathVariable String member_id) {
+		return memberRepository.DuplicationCheckMember_id(member_id);
 	}
 	
 	@GetMapping("/member/signUp/validation/email={email}")
-	public MemberDTO getDuplicationEmail(@PathVariable String email) {
-		return memberRepository.findMemberByEmail(email);
+	public int getDuplicationEmail(@PathVariable String email) {
+		return memberRepository.DuplicationCheckEmail(email);
 	}
 	
 	@PostMapping("/member")

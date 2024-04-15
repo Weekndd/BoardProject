@@ -21,15 +21,20 @@ public class MemberRepositoryImpl implements MemberRepository{
 	}
 
 	@Override
-	public MemberDTO findMemberByMember_id(String member_id) {
-		MemberDTO memberDTO = session.selectOne("findMemberByMember_id",member_id);
-		return memberDTO;
+	public Member findMemberByMember_id(String member_id) {
+		Member member = session.selectOne("findMemberByMember_id",member_id);
+		return member;
+	}
+	
+	@Override
+	public int DuplicationCheckMember_id(String member_id) {
+		int result = session.selectOne("DuplicationCheckMember_id",member_id);
+		return result;
 	}
 	@Override
-	public MemberDTO findMemberByEmail(String email) {
-		MemberDTO memberDTO = session.selectOne("findMemberByEmail",email);
-		
-		return memberDTO;
+	public int DuplicationCheckEmail(String email) {
+		int result = session.selectOne("DuplicationCheckEmail",email);
+		return result;
 	}
 
 }

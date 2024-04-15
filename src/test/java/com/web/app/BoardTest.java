@@ -7,6 +7,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.dto.BoardDTO;
 import com.web.app.dto.Criteria;
@@ -64,5 +65,11 @@ public class BoardTest {
 		criteria.setKeyword("테스트");
 		List<BoardDTO> list = boardRepository.getBoardListWithPaging(criteria);
 		list.forEach(board -> log.info(board.toString()));
+	}
+	
+	@Transactional
+	@Test
+	public void duplicationTest() {
+		
 	}
 }

@@ -42,7 +42,8 @@ function validation() {
     		window.location.href = "/login";
     	},
     	error: function(e){
-    		console.log("에러!!")
+    		alert("시스템에 문제가 발생했습니다. 다시 시도해주세요");
+    		window.location.href="/member/signUp";
     	}
     	
     });//end ajax
@@ -61,7 +62,7 @@ function checkIdDuplication(){
 			type: "get",
 			url: "/member/signUp/validation/member_id="+member_id,
 			success: function(data) {
-				if(data.member_id == null){
+				if(data == 0){
 					alert("사용 가능한 아이디 입니다.");		
 					$("#member_id").attr("data-checked","true");
 					$("#member_id").prop("readOnly",true);
@@ -90,7 +91,7 @@ function checkEmailDuplication(){
 		type: "get",
 		url: "/member/signUp/validation/email="+email,
 		success: function(data) {
-			if(data.email == null){
+			if(data.email == 0){
 				alert("사용 가능한 이메일 입니다.");
 				$("#email").attr("data-checked","true");
 				$("#email").prop("readOnly",true);
