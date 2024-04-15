@@ -28,11 +28,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	@Transactional
 	public void postMemberSignUp(MemberSignUpRequsetDTO memberSignUpRequsetDTO) {
-		Member member = createNewMember(memberSignUpRequsetDTO);
+		Member member = createNewMemberAndEncodePassword(memberSignUpRequsetDTO);
 		memberRepository.postMemberSignUp(member);
 	}
 	
-	private Member createNewMember(MemberSignUpRequsetDTO memberSignUpRequsetDTO) {
+	private Member createNewMemberAndEncodePassword(MemberSignUpRequsetDTO memberSignUpRequsetDTO) {
 		String encodingPasswd = passwordEncoder.encode(memberSignUpRequsetDTO.getPasswd());
 		Member newMember = new Member(memberSignUpRequsetDTO.getMember_id(),
 				encodingPasswd,
