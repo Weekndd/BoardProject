@@ -3,6 +3,7 @@ package com.web.app.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.dto.BoardDTO;
 import com.web.app.dto.Criteria;
@@ -41,6 +42,7 @@ public class BoardServiceImpl  implements BoardService {
 		return boardDTO;
 	}
 
+	@Transactional
 	@Override
 	public void register(BoardDTO boardDTO, SecurityUser securityUser) {
 		setWriterInfo(boardDTO, securityUser);
@@ -52,11 +54,13 @@ public class BoardServiceImpl  implements BoardService {
 		boardDTO.setEmail(securityUser.getEmail());
 	}
 
+	@Transactional
 	@Override
 	public void deletePosting(Long board_id) {
 		boardRepository.deletePosting(board_id);
 	}
 
+	@Transactional
 	@Override
 	public void modifyPosting(BoardDTO boardDTO) {
 		boardRepository.modifyPosting(boardDTO);

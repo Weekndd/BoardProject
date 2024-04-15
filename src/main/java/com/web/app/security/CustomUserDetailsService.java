@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.web.app.dto.MemberDTO;
+import com.web.app.domain.Member;
 import com.web.app.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,12 +23,12 @@ public class CustomUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
-			MemberDTO memberDTO = memberRepository.findMemberByMember_id(username);
+			Member member = memberRepository.findMemberByMember_id(username);
 
 			SecurityUser securityUser = SecurityUser.builder()
-					.member_id(memberDTO.getMember_id())
-					.passwd(memberDTO.getPasswd())
-					.email(memberDTO.getEmail())
+					.member_id(member.getMember_id())
+					.passwd(member.getPasswd())
+					.email(member.getEmail())
 					.build();
 			securityUser.getAuthList().add("USER");
 //			System.out.println("loadUserByUsername : "+ securityUser.getEmail());

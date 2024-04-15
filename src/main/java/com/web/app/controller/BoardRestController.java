@@ -49,20 +49,17 @@ public class BoardRestController {
 		return boardDTO;
 	}
 	
-	@Transactional
 	@PostMapping("/board/register")
 	public void postBoard(@AuthenticationPrincipal SecurityUser securityUser,
 			@RequestBody BoardDTO boardDTO) {
 		boardService.register(boardDTO, securityUser);
 	}
 	
-	@Transactional
 	@DeleteMapping("/board/{board_id}")
 	public void deletePosting(@PathVariable Long board_id) {
 		boardService.deletePosting(board_id);
 	}
 	
-	@Transactional
 	@PutMapping("/board/{board_id}")
 	public void modifiyPosting(@RequestBody BoardDTO boardDTO) {
 		boardService.modifyPosting(boardDTO);
