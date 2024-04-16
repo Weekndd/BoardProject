@@ -3,14 +3,15 @@ package com.web.app.repository;
 import java.util.List;
 import java.util.Map;
 
-import com.web.app.dto.BoardDTO;
+import com.web.app.domain.Board;
 import com.web.app.dto.Criteria;
+import com.web.app.dto.board.BoardDTO;
 
 public interface BoardRepository {
 
 	BoardDTO getBoard(Long board_id);
 
-	void register(BoardDTO boardDTO);
+	void register(Board board);
 
 	List<BoardDTO> getBoardList();
 

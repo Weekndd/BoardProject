@@ -8,15 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.dto.MemberDTO;
-import com.web.app.dto.MemberSignUpRequsetDTO;
+import com.web.app.dto.member.MemberInfoResponseDTO;
+import com.web.app.dto.member.MemberSignUpRequsetDTO;
 import com.web.app.repository.MemberRepository;
 import com.web.app.security.SecurityUser;
 import com.web.app.service.MemberService;
-import com.web.app.util.JwtToken;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,8 +40,8 @@ public class MemberRestController {
 	}
 	
 	@GetMapping("/member")
-	public MemberDTO getLoginMember(@AuthenticationPrincipal SecurityUser securityUser) {			//securityUser.getAuthList().get(0)
-		return new MemberDTO(securityUser.getMember_id(), null, securityUser.getEmail(), null); //접근제한 할 때 여기에 권한넣으면 됨 위와 같은 형식으로 하면 될 듯?
+	public MemberInfoResponseDTO getLoginMember(@AuthenticationPrincipal SecurityUser securityUser) {			//securityUser.getAuthList().get(0)
+		return new MemberInfoResponseDTO(securityUser.getMember_id(), securityUser.getEmail(), null); //접근제한 할 때 여기에 권한넣으면 됨 위와 같은 형식으로 하면 될 듯?
 	}
 	
 	

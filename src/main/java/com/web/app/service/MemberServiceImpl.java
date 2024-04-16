@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.Member;
-import com.web.app.dto.MemberDTO;
-import com.web.app.dto.MemberSignUpRequsetDTO;
+import com.web.app.dto.member.MemberSignUpRequsetDTO;
 import com.web.app.repository.MemberRepository;
 import com.web.app.util.JwtToken;
 import com.web.app.util.JwtTokenProvider;
