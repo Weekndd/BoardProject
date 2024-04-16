@@ -1,5 +1,6 @@
 package com.web.app.service;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -29,7 +30,11 @@ public class MemberServiceImpl implements MemberService{
 	@Transactional
 	public void postMemberSignUp(MemberSignUpRequsetDTO memberSignUpRequsetDTO) {
 		Member member = createNewMemberAndEncodePassword(memberSignUpRequsetDTO);
-		memberRepository.postMemberSignUp(member);
+		try {
+			memberRepository.postMemberSignUp(member);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityViolationException("아이디 혹은 이메일이 사용중입니다.");
+		}
 	}
 	
 	private Member createNewMemberAndEncodePassword(MemberSignUpRequsetDTO memberSignUpRequsetDTO) {

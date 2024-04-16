@@ -1,28 +1,39 @@
 package com.web.app;
 
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.web.app.dto.BoardDTO;
 import com.web.app.dto.Criteria;
+import com.web.app.dto.MemberSignUpRequsetDTO;
 import com.web.app.dto.PageDTO;
 import com.web.app.repository.BoardRepository;
+import com.web.app.repository.MemberRepository;
+import com.web.app.service.MemberService;
 
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
-import oracle.jdbc.clio.annotations.Trace;
 
 @SpringBootTest
 @Slf4j
 public class BoardTest {
 	@Autowired
 	private BoardRepository boardRepository;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private MemberRepository memberRepository;
 	
 	@Test
 	public void testPaging() {
@@ -59,6 +70,7 @@ public class BoardTest {
 	}
 	
 	@Test
+	@DisplayName("검색 및 페이징 테스트")
 	public void testSearchPaging() {
 		Criteria criteria = new Criteria();
 		criteria.setType("T");
@@ -67,9 +79,14 @@ public class BoardTest {
 		list.forEach(board -> log.info(board.toString()));
 	}
 	
-	@Transactional
 	@Test
+	@DisplayName("회원가입 실패 - 아이디/이메일 중복")
 	public void duplicationTest() {
-		
+	    //Given
+	    MemberSignUpRequsetDTO dto = new MemberSignUpRequsetDTO("test", "1234", "test@naver.com", "user");
+	    //When
+	    Throwable thrown = assertThrows(DataIntegrityViolationException.class, () -> memberService.postMemberSignUp(dto));
+	    //Then
+	    assertThat(thrown.getMessage()).isEqualTo("아이디 혹은 이메일이 사용중입니다.");
 	}
 }
