@@ -7,8 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.dto.BoardDTO;
 import com.web.app.dto.PageDTO;
+import com.web.app.dto.board.BoardDTO;
+import com.web.app.dto.board.BoardRegisterRequestDTO;
 import com.web.app.security.SecurityUser;
 import com.web.app.service.BoardService;
 
@@ -36,6 +37,8 @@ public class BoardRestController {
 		List<BoardDTO> boardList = boardService.getBaordListWithPaging(pageNum, type, keyword);
 		return boardList;
 	}
+	
+	
 	@GetMapping("/pageInfo")
 	public PageDTO getPageInfo(@RequestParam int pageNum, String type, String keyword) {
 		PageDTO pageDTO = boardService.getPageInfo(pageNum, type, keyword);
@@ -51,8 +54,8 @@ public class BoardRestController {
 	
 	@PostMapping("/board/register")
 	public void postBoard(@AuthenticationPrincipal SecurityUser securityUser,
-			@RequestBody BoardDTO boardDTO) {
-		boardService.register(boardDTO, securityUser);
+			@RequestBody BoardRegisterRequestDTO boardRegisterRequestDTO) {
+		boardService.register(boardRegisterRequestDTO, securityUser);
 	}
 	
 	@DeleteMapping("/board/{board_id}")

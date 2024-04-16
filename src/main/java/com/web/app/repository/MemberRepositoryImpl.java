@@ -4,8 +4,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.web.app.domain.Member;
-import com.web.app.dto.MemberDTO;
-import com.web.app.security.SecurityUser;
 
 import lombok.RequiredArgsConstructor;
 

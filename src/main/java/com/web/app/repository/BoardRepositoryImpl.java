@@ -6,8 +6,9 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.web.app.dto.BoardDTO;
+import com.web.app.domain.Board;
 import com.web.app.dto.Criteria;
+import com.web.app.dto.board.BoardDTO;
 
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +38,8 @@ public class BoardRepositoryImpl implements BoardRepository{
 	}
 
 	@Override
-	public void register(BoardDTO boardDTO) {
-		int res = session.insert("registerBoard",boardDTO);
+	public void register(Board board) {
+		int res = session.insert("registerBoard",board);
 	}
 
 

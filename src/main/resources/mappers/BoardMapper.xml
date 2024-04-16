@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM board WHERE board_id = #{board_id}
 	</select>
 	
-	<insert id="registerBoard" parameterType="boardDTO">
+	<insert id="registerBoard" parameterType="Board">
 		INSERT INTO board values (
 			board_id_seq.nextval,
 			#{title},

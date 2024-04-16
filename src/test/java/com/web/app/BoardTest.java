@@ -15,10 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.web.app.dto.BoardDTO;
 import com.web.app.dto.Criteria;
-import com.web.app.dto.MemberSignUpRequsetDTO;
 import com.web.app.dto.PageDTO;
+import com.web.app.dto.board.BoardDTO;
+import com.web.app.dto.member.MemberSignUpRequsetDTO;
 import com.web.app.repository.BoardRepository;
 import com.web.app.repository.MemberRepository;
 import com.web.app.service.MemberService;

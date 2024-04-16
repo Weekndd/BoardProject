@@ -1,4 +1,4 @@
-package com.web.app.dto;
+package com.web.app.dto.board;
 
 import org.apache.ibatis.type.Alias;
 

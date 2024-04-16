@@ -3,7 +3,7 @@ package com.web.app.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.dto.BoardDTO;
+import com.web.app.dto.board.BoardDTO;
 import com.web.app.service.BoardService;
 
 import jakarta.servlet.http.Cookie;

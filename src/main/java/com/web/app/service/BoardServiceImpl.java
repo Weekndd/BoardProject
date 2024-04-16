@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.app.dto.BoardDTO;
+import com.web.app.domain.Board;
 import com.web.app.dto.Criteria;
 import com.web.app.dto.PageDTO;
+import com.web.app.dto.board.BoardDTO;
+import com.web.app.dto.board.BoardRegisterRequestDTO;
 import com.web.app.repository.BoardRepository;
 import com.web.app.security.SecurityUser;
 
@@ -44,14 +46,17 @@ public class BoardServiceImpl  implements BoardService {
 
 	@Transactional
 	@Override
-	public void register(BoardDTO boardDTO, SecurityUser securityUser) {
-		setWriterInfo(boardDTO, securityUser);
-		boardRepository.register(boardDTO);
-		
+	public void register(BoardRegisterRequestDTO boardRegisterRequestDTO, SecurityUser securityUser) {
+		Board newBoard = setWriterInfo(boardRegisterRequestDTO, securityUser);
+		boardRepository.register(newBoard);
 	}
-	private static void setWriterInfo(BoardDTO boardDTO, SecurityUser securityUser) {
-		boardDTO.setWriter(securityUser.getMember_id());
-		boardDTO.setEmail(securityUser.getEmail());
+	private static Board setWriterInfo(BoardRegisterRequestDTO boardRegisterRequestDTO, SecurityUser securityUser) {
+		Board newBoard = new Board();
+		newBoard.setTitle(boardRegisterRequestDTO.getTitle());
+		newBoard.setContent(boardRegisterRequestDTO.getContent());
+		newBoard.setWriter(securityUser.getMember_id());
+		newBoard.setEmail(securityUser.getEmail());
+		return newBoard;
 	}
 
 	@Transactional
