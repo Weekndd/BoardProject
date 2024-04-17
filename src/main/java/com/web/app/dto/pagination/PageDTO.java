@@ -1,4 +1,4 @@
-package com.web.app.dto;
+package com.web.app.dto.pagination;
 
 import lombok.Getter;
 import lombok.ToString;
