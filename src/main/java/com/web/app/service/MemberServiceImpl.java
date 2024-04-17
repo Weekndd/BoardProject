@@ -32,17 +32,16 @@ public class MemberServiceImpl implements MemberService{
 		try {
 			memberRepository.postMemberSignUp(member);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("아이디 혹은 이메일이 사용중입니다.");
+			throw new DataIntegrityViolationException("아이디 혹은 이메일이 사용중입니다.\n다른 아이디, 이메일로 재시도해주세요.");
 		}
 	}
 	
 	private Member createNewMemberAndEncodePassword(MemberSignUpRequsetDTO memberSignUpRequsetDTO) {
 		String encodingPasswd = passwordEncoder.encode(memberSignUpRequsetDTO.getPasswd());
-		Member newMember = new Member(memberSignUpRequsetDTO.getMember_id(),
-				encodingPasswd,
-				memberSignUpRequsetDTO.getEmail(),
-				memberSignUpRequsetDTO.getRole());
-		return newMember;
+		String member_id = memberSignUpRequsetDTO.getMember_id();
+		String email = memberSignUpRequsetDTO.getEmail();
+		String role = memberSignUpRequsetDTO.getRole();
+		return Member.of(member_id, encodingPasswd, email, role);
 	}
 	
 	@Override

@@ -7,8 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.web.app.domain.Board;
-import com.web.app.dto.Criteria;
 import com.web.app.dto.board.BoardDTO;
+import com.web.app.dto.pagination.Criteria;
 
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;

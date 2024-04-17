@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.dto.PageDTO;
 import com.web.app.dto.board.BoardDTO;
 import com.web.app.dto.board.BoardRegisterRequestDTO;
+import com.web.app.dto.pagination.PageDTO;
 import com.web.app.security.SecurityUser;
 import com.web.app.service.BoardService;
 

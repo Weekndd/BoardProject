@@ -5,19 +5,29 @@ import org.springframework.data.annotation.TypeAlias;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @TypeAlias("Board")
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Board {
-	String board_id;
-	String title;
-	String content;
-	String writer;
-	String email;
-	String 	create_at;
-	String modified_at;
+	private String board_id;
+	private String title;
+	private String content;
+	private String writer;
+	private String email;
+	private String 	create_at;
+	private String modified_at;
+	
+	public static Board of(String title, String content, String writer, String email) {
+		Board board = new Board(
+				null,
+				title,
+				content,
+				writer,
+				email,
+				null,
+				null);
+		return board;
+	}
 }
