@@ -9,12 +9,16 @@ import lombok.Setter;
 
 @TypeAlias("Member")
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
-	String member_id;
-	String passwd;
-	String email;
-	String role;
+	private String member_id;
+	private String passwd;
+	private String email;
+	private String role;
+	
+	public static Member of(String member_id, String passwd, String email, String role) {
+		return new Member(member_id, passwd, email, role);
+	}
+	
 }

@@ -1,13 +1,9 @@
 package com.web.app.security;
 
-import java.util.ArrayList;
-
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.web.app.domain.Member;
@@ -31,7 +27,6 @@ public class CustomUserDetailsService implements UserDetailsService{
 					.email(member.getEmail())
 					.build();
 			securityUser.getAuthList().add("USER");
-//			System.out.println("loadUserByUsername : "+ securityUser.getEmail());
 			return securityUser;
 //			return createUserDetails(securityUser);  --> @AuthenticationPrincipal을 사용해서 커스텀된 사용자정보를 가져오기 위해 바꿔줬음
 			
