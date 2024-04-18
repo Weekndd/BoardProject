@@ -1,12 +1,15 @@
 package com.web.app.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.Board;
 import com.web.app.dto.board.BoardDTO;
+import com.web.app.dto.board.BoardDetailsResponseDTO;
+import com.web.app.dto.board.BoardListResponseDTO;
 import com.web.app.dto.board.BoardRegisterRequestDTO;
 import com.web.app.dto.pagination.Criteria;
 import com.web.app.dto.pagination.PageDTO;
@@ -21,16 +24,15 @@ public class BoardServiceImpl  implements BoardService {
 	private final BoardRepository boardRepository;
 	
 	@Override
-	public List<BoardDTO> getBaordList() {
-		List<BoardDTO> boardList = boardRepository.getBoardList();
-		return boardList;
-	}
-	@Override
-	public List<BoardDTO> getBaordListWithPaging(int pageNum, String type, String keyword) {
+	public List<BoardListResponseDTO> getBaordListWithPaging(int pageNum, String type, String keyword) {
 		Criteria criteria = getCriteria(pageNum, type, keyword);
-		List<BoardDTO> boardList = boardRepository.getBoardListWithPaging(criteria);
-		return boardList;
+		List<Board> boardList = boardRepository.getBoardListWithPaging(criteria);
+		
+		return boardList.stream()
+				.map(board -> BoardListResponseDTO.of(board))
+				.collect(Collectors.toList());
 	}
+	
 	private static Criteria getCriteria(int pageNum, String type, String keyword) {
 		Criteria criteria = new Criteria(pageNum, 10);
 		criteria.setType(type);
@@ -39,9 +41,9 @@ public class BoardServiceImpl  implements BoardService {
 	}
 	
 	@Override
-	public BoardDTO getBoard(Long board_id) {
-		BoardDTO boardDTO = boardRepository.getBoard(board_id);
-		return boardDTO;
+	public BoardDetailsResponseDTO getBoard(Long board_id) {
+		Board board = boardRepository.getBoard(board_id);
+		return BoardDetailsResponseDTO.of(board);
 	}
 
 	@Transactional
@@ -60,14 +62,14 @@ public class BoardServiceImpl  implements BoardService {
 
 	@Transactional
 	@Override
-	public void deletePosting(Long board_id) {
-		boardRepository.deletePosting(board_id);
+	public void deleteBoard(Long board_id) {
+		boardRepository.deleteBoard(board_id);
 	}
 
 	@Transactional
 	@Override
-	public void modifyPosting(BoardDTO boardDTO) {
-		boardRepository.modifyPosting(boardDTO);
+	public void modifyBoard(BoardDTO boardDTO) {
+		boardRepository.modifyBoard(boardDTO);
 		
 	}
 	

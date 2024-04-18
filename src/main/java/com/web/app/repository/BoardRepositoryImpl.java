@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.web.app.domain.Board;
 import com.web.app.dto.board.BoardDTO;
+import com.web.app.dto.board.BoardListResponseDTO;
 import com.web.app.dto.pagination.Criteria;
 
 import lombok.NoArgsConstructor;
@@ -18,23 +19,16 @@ import lombok.RequiredArgsConstructor;
 public class BoardRepositoryImpl implements BoardRepository{
 	private final SqlSessionTemplate session;
 	
-	
-	
 	@Override
-	public List<BoardDTO> getBoardList() {
-		List<BoardDTO> boardList = session.selectList("getBoardList");
-		return boardList;
-	}
-	@Override
-	public List<BoardDTO> getBoardListWithPaging(Criteria criteria) {
-		List<BoardDTO> list = session.selectList("getBoardListWithPaging",criteria);
+	public List<Board> getBoardListWithPaging(Criteria criteria) {
+		List<Board> list = session.selectList("getBoardListWithPaging",criteria);
 		return list;
 	}
 
 	@Override
-	public BoardDTO getBoard(Long board_id) {
-		BoardDTO boardDTO = session.selectOne("getBoard",board_id);
-		return boardDTO;
+	public Board getBoard(Long board_id) {
+		Board board = session.selectOne("getBoard",board_id);
+		return board;
 	}
 
 	@Override
@@ -44,13 +38,13 @@ public class BoardRepositoryImpl implements BoardRepository{
 
 
 	@Override
-	public void deletePosting(Long board_id) {
+	public void deleteBoard(Long board_id) {
 		int res = session.delete("deletePosting",board_id);
 	}
 
 
 	@Override
-	public void modifyPosting(BoardDTO boardDTO) {
+	public void modifyBoard(BoardDTO boardDTO) {
 		int res = session.update("modifyPosting",boardDTO);
 	}
 	

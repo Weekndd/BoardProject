@@ -9,17 +9,15 @@ import com.web.app.dto.pagination.Criteria;
 
 public interface BoardRepository {
 
-	BoardDTO getBoard(Long board_id);
+	Board getBoard(Long board_id);
 
 	void register(Board board);
 
-	List<BoardDTO> getBoardList();
+	void deleteBoard(Long board_id);
 
-	void deletePosting(Long board_id);
+	void modifyBoard(BoardDTO boardDTO);
 
-	void modifyPosting(BoardDTO boardDTO);
-
-	List<BoardDTO> getBoardListWithPaging(Criteria criteria);
+	List<Board> getBoardListWithPaging(Criteria criteria);
 
 	long getTotalPostingCount(Criteria criteria);
 
