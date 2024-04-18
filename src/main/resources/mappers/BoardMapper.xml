@@ -23,11 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 	</sql>
 	
-	<select id="getBoardList" resultType="boardDTO">
-		SELECT * FROM board
-	</select>
-	
-	<select id="getBoard" parameterType="Long" resultType="boardDTO">
+	<select id="getBoard" parameterType="Long" resultType="Board">
 		SELECT * FROM board WHERE board_id = #{board_id}
 	</select>
 	
@@ -59,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- criteria를 파라미터 타입으로 받고 있지만 따로 선언하지 않아도 #{pageNum}과 #{amount}를 알아서 연결하고 있는 모습... -->	
 	<!-- 검색과 페이징 처리 -->
- 	<select id="getBoardListWithPaging" resultType="boardDTO">
+ 	<select id="getBoardListWithPaging" resultType="Board">
 	<![CDATA[
 		SELECT
 			BOARD_ID,

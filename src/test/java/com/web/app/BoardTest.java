@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import com.web.app.domain.Board;
 import com.web.app.dto.board.BoardDTO;
 import com.web.app.dto.board.BoardRegisterRequestDTO;
 import com.web.app.dto.member.MemberSignUpRequsetDTO;
@@ -44,7 +45,7 @@ public class BoardTest {
 	public void testPaging() {
 		//1-10
 		Criteria criteria = new Criteria();
-		List<BoardDTO> list = boardRepository.getBoardListWithPaging(criteria);
+		List<Board> list = boardRepository.getBoardListWithPaging(criteria);
 		list.forEach(board -> log.info(board.toString()));
 	}
 	
@@ -80,7 +81,7 @@ public class BoardTest {
 		Criteria criteria = new Criteria();
 		criteria.setType("T");
 		criteria.setKeyword("테스트");
-		List<BoardDTO> list = boardRepository.getBoardListWithPaging(criteria);
+		List<Board> list = boardRepository.getBoardListWithPaging(criteria);
 		list.forEach(board -> log.info(board.toString()));
 	}
 	
