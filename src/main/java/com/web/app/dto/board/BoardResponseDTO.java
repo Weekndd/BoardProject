@@ -9,15 +9,15 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class BoardDetailsResponseDTO {
-	private final int board_id;
+public class BoardResponseDTO {
+	private final Long board_id;
 	private final String title;
 	private final String content;
 	private final String writer;
 	private final String email;
 	
-	public static BoardDetailsResponseDTO of(Board board) {
-		return BoardDetailsResponseDTO.builder()
+	public static BoardResponseDTO of(Board board) {
+		return BoardResponseDTO.builder()
 				.board_id(board.getBoard_id())
 				.title(board.getTitle())
 				.content(board.getContent())

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Board {
-	private int board_id;
+	private Long board_id;
 	private String title;
 	private String content;
 	private String writer;
@@ -28,5 +28,9 @@ public class Board {
 				.writer(writer)
 				.email(email)
 				.build();
+	}
+	public void change(String title, String content) {
+		this.title = title;
+		this.content = content;
 	}
 }

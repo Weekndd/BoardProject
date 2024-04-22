@@ -11,7 +11,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class BoardListResponseDTO {
-	private final int board_id;
+	private final Long board_id;
 	private final String title;
 	private final String writer;
 	private final String email;

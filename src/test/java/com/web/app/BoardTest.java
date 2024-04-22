@@ -16,8 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import com.web.app.domain.Board;
-import com.web.app.dto.board.BoardDTO;
-import com.web.app.dto.board.BoardRegisterRequestDTO;
+import com.web.app.dto.board.BoardRequestDTO;
 import com.web.app.dto.member.MemberSignUpRequsetDTO;
 import com.web.app.dto.pagination.Criteria;
 import com.web.app.dto.pagination.PageDTO;
@@ -71,7 +70,7 @@ public class BoardTest {
 		Map<String, Map<String,String>> outer = new HashMap<>();
 		outer.put("map", map);
 		
-		List<BoardDTO> list = boardRepository.searchTest("searchTest",outer);
+		List<Board> list = boardRepository.searchTest("searchTest",outer);
 		list.forEach(b -> log.info(b.toString()));
 	}
 	
