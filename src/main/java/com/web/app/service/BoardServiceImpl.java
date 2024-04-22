@@ -7,10 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.Board;
-import com.web.app.dto.board.BoardDTO;
-import com.web.app.dto.board.BoardDetailsResponseDTO;
+import com.web.app.dto.board.BoardResponseDTO;
 import com.web.app.dto.board.BoardListResponseDTO;
-import com.web.app.dto.board.BoardRegisterRequestDTO;
+import com.web.app.dto.board.BoardRequestDTO;
 import com.web.app.dto.pagination.Criteria;
 import com.web.app.dto.pagination.PageDTO;
 import com.web.app.repository.BoardRepository;
@@ -41,18 +40,18 @@ public class BoardServiceImpl  implements BoardService {
 	}
 	
 	@Override
-	public BoardDetailsResponseDTO getBoard(Long board_id) {
+	public BoardResponseDTO getBoard(Long board_id) {
 		Board board = boardRepository.getBoard(board_id);
-		return BoardDetailsResponseDTO.of(board);
+		return BoardResponseDTO.of(board);
 	}
 
 	@Transactional
 	@Override
-	public void register(BoardRegisterRequestDTO boardRegisterRequestDTO, SecurityUser securityUser) {
+	public void register(BoardRequestDTO boardRegisterRequestDTO, SecurityUser securityUser) {
 		Board newBoard = createNewBoard(boardRegisterRequestDTO, securityUser);
 		boardRepository.register(newBoard);
 	}
-	private static Board createNewBoard(BoardRegisterRequestDTO boardRegisterRequestDTO, SecurityUser securityUser) {		
+	private static Board createNewBoard(BoardRequestDTO boardRegisterRequestDTO, SecurityUser securityUser) {		
 		String title = boardRegisterRequestDTO.getTitle();
 		String content = boardRegisterRequestDTO.getContent();
 		String writer = securityUser.getUsername();
@@ -68,8 +67,10 @@ public class BoardServiceImpl  implements BoardService {
 
 	@Transactional
 	@Override
-	public void modifyBoard(BoardDTO boardDTO) {
-		boardRepository.modifyBoard(boardDTO);
+	public void modifyBoard(BoardRequestDTO boardRequestDTO, Long board_id) {
+		Board board = boardRepository.getBoard(board_id);
+		board.change(boardRequestDTO.getTitle(), boardRequestDTO.getContent());
+		boardRepository.modifyBoard(board);
 		
 	}
 	

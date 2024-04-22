@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE board WHERE #{board_id} = board_id
 	</delete>
 	
-	<update id="modifyPosting" parameterType="boardDTO">
+	<update id="modifyPosting" parameterType="Board">
 		UPDATE board 
 		SET 
 			title = #{title},
@@ -88,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	<select id="searchTest" resultType="boardDTO">
+	<select id="searchTest" resultType="Board">
 		<![CDATA[
 		SELECT * FROM board
 		WHERE

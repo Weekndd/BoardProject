@@ -6,10 +6,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.web.app.dto.board.BoardDTO;
-import com.web.app.dto.board.BoardDetailsResponseDTO;
+import com.web.app.dto.board.BoardResponseDTO;
 import com.web.app.dto.board.BoardListResponseDTO;
-import com.web.app.dto.board.BoardRegisterRequestDTO;
+import com.web.app.dto.board.BoardRequestDTO;
 import com.web.app.dto.pagination.PageDTO;
 import com.web.app.security.SecurityUser;
 import com.web.app.service.BoardService;
@@ -48,27 +47,29 @@ public class BoardRestController {
 	
 	//상세 게시물
 	@GetMapping("/board/{board_id}")
-	public BoardDetailsResponseDTO getBoard(@PathVariable Long board_id) {
-		BoardDetailsResponseDTO boardDetailsResponseDTO = boardService.getBoard(board_id);
-		return boardDetailsResponseDTO;
+	public BoardResponseDTO getBoard(@PathVariable Long board_id) {
+		BoardResponseDTO boardResponseDTO = boardService.getBoard(board_id);
+		return boardResponseDTO;
 	}
 	
 	//게시글 등록
 	@PostMapping("/board/register")
 	public void postBoard(@AuthenticationPrincipal SecurityUser securityUser,
-			@RequestBody BoardRegisterRequestDTO boardRegisterRequestDTO) {
-		boardService.register(boardRegisterRequestDTO, securityUser);
+			@RequestBody BoardRequestDTO boardRequestDTO) {
+		boardService.register(boardRequestDTO, securityUser);
 	}
 	
+	//게시글 삭제
 	@DeleteMapping("/board/{board_id}")
 	public void deleteBoard(@PathVariable Long board_id) {
 		boardService.deleteBoard(board_id);
 	}
 	
+	//게시글 수정
 	@PutMapping("/board/{board_id}")
-	public void modifiyBoard(@RequestBody BoardRegisterRequestDTO boardRegisterRequestDTO) {
-		//지금까지는 DTO를 service에서 domain으로 변환해서 리포지토리에 넘겨줬는데, board를 수정할 때는....? 그냥 똑같나??
-//		boardService.modifyBoard(boardRegisterRequestDTO);
+	public void modifiyBoard(@RequestBody BoardRequestDTO boardRequestDTO,
+			@PathVariable Long board_id) {
+		boardService.modifyBoard(boardRequestDTO, board_id);
 	}
 	
 }

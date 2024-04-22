@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.web.app.domain.Board;
-import com.web.app.dto.board.BoardDTO;
 import com.web.app.dto.board.BoardListResponseDTO;
 import com.web.app.dto.pagination.Criteria;
 
@@ -44,8 +43,8 @@ public class BoardRepositoryImpl implements BoardRepository{
 
 
 	@Override
-	public void modifyBoard(BoardDTO boardDTO) {
-		int res = session.update("modifyPosting",boardDTO);
+	public void modifyBoard(Board board) {
+		int res = session.update("modifyPosting",board);
 	}
 	
 	@Override
@@ -55,8 +54,8 @@ public class BoardRepositoryImpl implements BoardRepository{
 	}
 	
 	@Override
-	public List<BoardDTO> searchTest(String string, Map<String, Map<String, String>> outer) {
-		List<BoardDTO> list = session.selectList("searchTest", outer);
+	public List<Board> searchTest(String string, Map<String, Map<String, String>> outer) {
+		List<Board> list = session.selectList("searchTest", outer);
 		return list;
 	}
 	
