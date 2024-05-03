@@ -1,4 +1,4 @@
-package com.web.app.repository;
+package com.web.app.repository.member;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;

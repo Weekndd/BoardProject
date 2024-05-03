@@ -1,4 +1,4 @@
-package com.web.app.repository;
+package com.web.app.repository.board;
 
 import java.util.List;
 import java.util.Map;

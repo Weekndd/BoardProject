@@ -361,10 +361,11 @@
 		var content = "";
 		var board;
 		var loginMember;
+		var board_id = window.location.href.split('/').pop();
 		$(document).ready(async function(){
 			await Promise.all([
 				getLoginMember(),
-				getBoardDetails(window.location.href.split('/').pop())
+				getBoardDetails(board_id)
 			]);
 			
 			$("#title").text(board.title);
@@ -386,6 +387,21 @@
 			} 
 			
 		});//end document Ready
+		
+		function likes() {
+			$.ajax({
+				type : "POST",
+				url : "/likes",
+				data : {
+					"board_id" : board_id
+				},
+				success : function(data) {
+					console.log(data);
+					console.log("good")
+				}
+				
+			})
+		}
 		
 		function modifyPage() {
 			window.location.href = "/board/modify/"+board.board_id;
@@ -455,7 +471,7 @@
             <h3 class="screen_out">contents</h3>
             
             <div id="viewer"></div>
-            <button class="likes">좋아요</button>
+            <button class="likes" onclick="likes()">좋아요</button>
 	        <button id="modi" class="modi" onclick="modifyPage()">수정하기</button>
 	        
         </article>

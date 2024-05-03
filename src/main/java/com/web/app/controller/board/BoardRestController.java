@@ -1,4 +1,4 @@
-package com.web.app.controller;
+package com.web.app.controller.board;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import com.web.app.dto.board.BoardListResponseDTO;
 import com.web.app.dto.board.BoardRequestDTO;
 import com.web.app.dto.pagination.PageDTO;
 import com.web.app.security.SecurityUser;
-import com.web.app.service.BoardService;
+import com.web.app.service.board.BoardService;
 
 import lombok.RequiredArgsConstructor;
 

@@ -20,11 +20,11 @@ import com.web.app.dto.board.BoardRequestDTO;
 import com.web.app.dto.member.MemberSignUpRequsetDTO;
 import com.web.app.dto.pagination.Criteria;
 import com.web.app.dto.pagination.PageDTO;
-import com.web.app.repository.BoardRepository;
-import com.web.app.repository.MemberRepository;
+import com.web.app.repository.board.BoardRepository;
+import com.web.app.repository.member.MemberRepository;
 import com.web.app.security.SecurityUser;
-import com.web.app.service.BoardService;
-import com.web.app.service.MemberService;
+import com.web.app.service.board.BoardService;
+import com.web.app.service.member.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -94,6 +94,14 @@ public class BoardTest {
 	    //Then
 	    log.info(thrown.getMessage());
 //	    assertThat(thrown.getMessage()).isEqualTo("아이디 혹은 이메일이 사용중입니다.\n다른 아이디, 이메일로 재시도해주세요.");
+	}
+	
+	@Test
+	@DisplayName("더미데이터 입력")
+	public void insertTest() {
+		for(int i=1; i<= 253; i++) {
+			boardRepository.register(Board.of("더미데이터 "+i, "더미데이터 내용"+i, "sss", "hsch19@naver.com"));
+		}
 	}
 	
 }

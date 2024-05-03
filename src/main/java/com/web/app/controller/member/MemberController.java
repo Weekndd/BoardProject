@@ -1,11 +1,11 @@
-package com.web.app.controller;
+package com.web.app.controller.member;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.web.app.security.SecurityUser;
-import com.web.app.service.MemberService;
+import com.web.app.service.member.MemberService;
 import com.web.app.util.JwtToken;
 
 import jakarta.servlet.http.Cookie;

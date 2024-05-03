@@ -1,4 +1,4 @@
-package com.web.app.repository;
+package com.web.app.repository.member;
 
 import com.web.app.domain.Member;
 
