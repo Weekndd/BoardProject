@@ -1,4 +1,4 @@
-package com.web.app.controller;
+package com.web.app.controller.member;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.app.dto.member.MemberInfoResponseDTO;
 import com.web.app.dto.member.MemberSignUpRequsetDTO;
-import com.web.app.repository.MemberRepository;
+import com.web.app.repository.member.MemberRepository;
 import com.web.app.security.SecurityUser;
-import com.web.app.service.MemberService;
+import com.web.app.service.member.MemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

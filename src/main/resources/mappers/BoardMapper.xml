@@ -66,7 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			CREATE_AT,
 			MODIFIED_AT
 		FROM (
-		    SELECT  /*+ INDEX_DESC(board board_pk) */ rownum rn, board.*
+		    SELECT  /*+ INDEX_DESC(board pk_board_id) */ rownum rn, board.*
 		    FROM board
 		    WHERE 
 	]]>

@@ -1,4 +1,4 @@
-package com.web.app.service;
+package com.web.app.service.member;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.app.domain.Member;
 import com.web.app.dto.member.MemberSignUpRequsetDTO;
-import com.web.app.repository.MemberRepository;
+import com.web.app.repository.member.MemberRepository;
 import com.web.app.util.JwtToken;
 import com.web.app.util.JwtTokenProvider;
 

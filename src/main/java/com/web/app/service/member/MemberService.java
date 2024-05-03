@@ -1,4 +1,4 @@
-package com.web.app.service;
+package com.web.app.service.member;
 
 import com.web.app.dto.member.MemberSignUpRequsetDTO;
 import com.web.app.util.JwtToken;
